@@ -1,31 +1,23 @@
+import apiClient from '../api/client';
 import type { Product } from "../models";
 
 export class ProductService {
   static async fetchProducts(): Promise<Product[]> {
-    const data = localStorage.getItem('products');
-    if (data) {
-      return JSON.parse(data);
-    }
-    return [];
+    const response = await apiClient.get('/products');
+    return response.data;
   }
 
-  static async addProduct(product: Product): Promise<void> {
-    const data = localStorage.getItem('products');
-    const currentProducts: Product[] = data ? JSON.parse(data) : [];
-    localStorage.setItem('products', JSON.stringify([...currentProducts, { ...product, id: Date.now().toString() }]));
+  static async addProduct(product: Product): Promise<Product> {
+    const response = await apiClient.post('/products', product);
+    return response.data;
   }
 
-  static async updateProduct(product: Product): Promise<void> {
-    const data = localStorage.getItem('products');
-    const currentProducts: Product[] = data ? JSON.parse(data) : [];
-    const updatedProducts = currentProducts.map((p) => (p.id === product.id ? product : p));
-    localStorage.setItem('products', JSON.stringify(updatedProducts));
+  static async updateProduct(product: Product): Promise<Product> {
+    const response = await apiClient.put(`/products/${product.id}`, product);
+    return response.data;
   }
 
   static async deleteProduct(productId: Product['id']): Promise<void> {
-    const data = localStorage.getItem('products');
-    const currentProducts: Product[] = data ? JSON.parse(data) : [];
-    const updatedProducts = currentProducts.filter((p) => p.id !== productId);
-    localStorage.setItem('products', JSON.stringify(updatedProducts));
+    await apiClient.delete(`/products/${productId}`);
   }
 }

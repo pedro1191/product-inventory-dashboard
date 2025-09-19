@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import ProductTableFilters from './components/ProductTableFilters'
 import ProductTable from './components/ProductTable'
-import type { Product, ProductFilters } from './models';
+import type { Nullable, Product, ProductFilters } from './models';
 import Modal from './components/Modal';
 import ProductForm from './components/ProductForm';
 import { ProductService } from './services';
 import InventoryStats from './components/InventoryStats';
 import { emptyFilters } from './constants';
+import Toast from './components/Toast';
+import type { ErrorResponse } from './models/api';
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -15,8 +17,17 @@ function App() {
   const [selectedProductId, setSelectedProductId] = useState<Product['id'] | null>(null);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<Nullable<string>>(null);
 
   const selectedProduct = products.find(p => p.id === selectedProductId) ?? null;
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+  };
+
+  const hideToast = () => {
+    setToastMessage(null);
+  };
 
   const filteredProducts = products.filter(product => {
     if (filters.category !== null && product.category !== filters.category) {
@@ -45,8 +56,13 @@ function App() {
 
   useEffect(() => {
     async function loadProducts() {
-      const fetchedProducts = await ProductService.fetchProducts();
-      setProducts(fetchedProducts);
+      try {
+        const fetchedProducts = await ProductService.fetchProducts();
+        setProducts(fetchedProducts);
+      } catch (e: unknown) {
+        const errorMessage = (e as ErrorResponse).error ?? 'An unexpected error occurred while fetching products.';
+        showToast(errorMessage);
+      }
     }
     loadProducts();
 
@@ -56,14 +72,20 @@ function App() {
   }, []);
 
   const handleSaveProduct = async (product: Product): Promise<void> => {
-    if (product.id) {
-      await ProductService.updateProduct(product);
-    } else {
-      await ProductService.addProduct(product);
+    try {
+      if (product.id) {
+        await ProductService.updateProduct(product);
+      } else {
+        await ProductService.addProduct(product);
+      }
+      handleCloseModal();
+      const updatedProducts = await ProductService.fetchProducts();
+      setProducts(updatedProducts);
+      showToast("Product saved successfully");
+    } catch (e: unknown) {
+      const errorMessage = (e as ErrorResponse).error ?? 'An unexpected error occurred while saving the product.';
+      showToast(errorMessage);
     }
-    handleCloseModal();
-    const updatedProducts = await ProductService.fetchProducts();
-    setProducts(updatedProducts);
   }
 
   const handleCloseModal = () => {
@@ -96,10 +118,18 @@ function App() {
 
   const handleClickConfirmDeleteProduct = async () => {
     if (!selectedProductId) return;
-    await ProductService.deleteProduct(selectedProductId);
-    const updatedProducts = await ProductService.fetchProducts();
-    setProducts(updatedProducts);
-    setIsConfirmationModalOpen(false);
+
+    try {
+      await ProductService.deleteProduct(selectedProductId);
+      const updatedProducts = await ProductService.fetchProducts();
+      setProducts(updatedProducts);
+      setSelectedProductId(null);
+      setIsConfirmationModalOpen(false);
+      showToast("Product deleted successfully");
+    } catch (e: unknown) {
+      const errorMessage = (e as ErrorResponse).error ?? 'An unexpected error occurred while deleting the product';
+      showToast(errorMessage);
+    }
   }
 
   return (
@@ -133,6 +163,10 @@ function App() {
           <button onClick={handleClickConfirmDeleteProduct}>Yes</button>
         </div>
       </Modal>
+      <Toast
+        message={toastMessage}
+        onClose={hideToast}
+      />
     </>
   )
 }
