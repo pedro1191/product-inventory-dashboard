@@ -1,15 +1,15 @@
 import type { Nullable } from "../models";
 
-interface NumberInputProps {
-  id: string;
+interface NumberInputProps<T extends string = string> {
+  id: T;
   label: string;
   placeholder?: string;
   value: Nullable<number>;
-  onChange: (e: Nullable<number>) => void;
+  onChange: (id: T, value: Nullable<number>) => void;
   required?: boolean;
 }
 
-export default function NumberInput({ id, label, placeholder, value, onChange, required }: NumberInputProps) {
+export default function NumberInput<T extends string = string>({ id, label, placeholder, value, onChange, required }: NumberInputProps<T>) {
   return (
     <div>
       <label htmlFor={id}>{label}</label>
@@ -19,7 +19,7 @@ export default function NumberInput({ id, label, placeholder, value, onChange, r
         name={id}
         placeholder={placeholder}
         value={value ?? ''}
-        onChange={(e) => onChange(e.target.value ? Number(e.target.value) : null)}
+        onChange={(e) => onChange(id, e.target.value ? Number(e.target.value) : null)}
         required={required}
       />
     </div>

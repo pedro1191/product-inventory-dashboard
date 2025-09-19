@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import type { Nullable, ProductCategory, ProductFilters, ProductStockStatus } from '../models';
+import type { ProductFilters } from '../models';
 import NumberInput from './NumberInput';
 import SearchInput from './SearchInput';
 import SelectInput from './SelectInput';
@@ -12,24 +12,11 @@ interface ProductTableFiltersProps {
 
 export default function ProductTableFilters({ filters, onFiltersChange }: ProductTableFiltersProps) {
 
-  const onCategoryChange = useCallback((value: Nullable<ProductCategory>) => {
-    onFiltersChange({ ...filters, category: value });
-  }, [filters, onFiltersChange]);
-
-  const onStockStatusChange = useCallback((value: Nullable<ProductStockStatus>) => {
-    onFiltersChange({ ...filters, stockStatus: value });
-  }, [filters, onFiltersChange]);
-
-  const onMinPriceChange = useCallback((value: Nullable<number>) => {
-    onFiltersChange({ ...filters, priceRange: { ...filters.priceRange, min: value } });
-  }, [filters, onFiltersChange]);
-
-  const onMaxPriceChange = useCallback((value: Nullable<number>) => {
-    onFiltersChange({ ...filters, priceRange: { ...filters.priceRange, max: value } });
-  }, [filters, onFiltersChange]);
-
-  const onSearchChange = useCallback((value: string) => {
-    onFiltersChange({ ...filters, search: value });
+  const handleFieldChange = useCallback(<K extends keyof ProductFilters>(
+    field: K,
+    value: ProductFilters[K]
+  ) => {
+    onFiltersChange({ ...filters, [field]: value });
   }, [filters, onFiltersChange]);
 
   return (
@@ -42,23 +29,24 @@ export default function ProductTableFilters({ filters, onFiltersChange }: Produc
         label="Category"
         value={filters.category}
         options={categoryOptions}
-        onChange={onCategoryChange}
+        onChange={handleFieldChange}
       />
       <div>
-        <NumberInput id="minPrice" label="Min Price:" placeholder="Min price..." value={filters.priceRange.min} onChange={onMinPriceChange} />
-        <NumberInput id="maxPrice" label="Max Price:" placeholder="Max price..." value={filters.priceRange.max} onChange={onMaxPriceChange} />
+        <NumberInput id="minPrice" label="Min Price:" placeholder="Min price..." value={filters.minPrice} onChange={handleFieldChange} />
+        <NumberInput id="maxPrice" label="Max Price:" placeholder="Max price..." value={filters.maxPrice} onChange={handleFieldChange} />
       </div>
       <SelectInput
         id="stockStatus"
         label="Stock Status"
         value={filters.stockStatus}
         options={stockStatusOptions}
-        onChange={onStockStatusChange}
+        onChange={handleFieldChange}
       />
       <SearchInput
+        id="search"
         placeholder="Search by name or description..."
         value={filters.search}
-        onChange={onSearchChange}
+        onChange={handleFieldChange}
       />
     </div>
   );

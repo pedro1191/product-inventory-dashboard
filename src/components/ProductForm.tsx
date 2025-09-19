@@ -1,61 +1,93 @@
-import { useEffect, useState } from "react";
-import type { Nullable, Product, ProductCategory } from "../models";
+import { useCallback, useEffect, useState } from "react";
+import type { Nullable, Product, ProductForm } from "../models";
 import NumberInput from "./NumberInput";
 import SelectInput from "./SelectInput";
 import TextInput from "./TextInput";
-import { categoryOptions, defaultCategory } from "../constants";
+import { categoryOptions, emptyProductForm } from "../constants";
 import ProductImage from "./ProductImage";
+import { useProductSelectionDispatchContext } from "../contexts";
+import Button from "./Button";
 
 interface ProductFormProps {
   product: Nullable<Product>
-  onCancel: () => void;
-  onSave: (product: Product) => void;
+  onSave?: (product: Product) => void;
 }
 
-const emptyProduct: Product = {
-  id: '',
-  name: '',
-  description: '',
-  price: 0,
-  category: 'Electronics',
-  stock: 0,
-  imageUrl: ''
-};
-
-export default function ProductForm({ product, onCancel, onSave }: ProductFormProps) {
-  const [productForm, setProductForm] = useState<Product>(product ?? emptyProduct);
+export default function ProductForm({ product, onSave }: ProductFormProps) {
+  const [productForm, setProductForm] = useState<ProductForm>(product ?? emptyProductForm);
+  const dispatch = useProductSelectionDispatchContext();
 
   useEffect(() => {
-    setProductForm(product ?? emptyProduct);
+    setProductForm(product ?? emptyProductForm);
   }, [product]);
 
-  const handleOnSave = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFieldChange = useCallback(<K extends keyof ProductForm>(
+    field: K,
+    value: ProductForm[K]
+  ) => {
+    setProductForm(prevState => ({ ...prevState, [field]: value }));
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    dispatch({ type: 'closed_product_modal' });
+  }, [dispatch])
+
+  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSave(productForm);
+    onSave?.(productForm as Product);
   }
 
   return (
-    <form onSubmit={handleOnSave}>
-      <TextInput id="name" label="Name" value={productForm.name} onChange={(value) => setProductForm(prev => ({ ...prev, name: value }))} required />
-      <TextInput id="description" label="Description" value={productForm.description} onChange={(value) => setProductForm(prev => ({ ...prev, description: value }))} required />
-      <TextInput id="imageUrl" label="Image URL" value={productForm.imageUrl} onChange={(value) => setProductForm(prev => ({ ...prev, imageUrl: value }))} required />
+    <form onSubmit={handleSave}>
+      <TextInput
+        id="name"
+        label="Name"
+        value={productForm.name}
+        onChange={handleFieldChange}
+        required
+      />
+      <TextInput
+        id="description"
+        label="Description"
+        value={productForm.description}
+        onChange={handleFieldChange}
+        required
+      />
+      <TextInput
+        id="imageUrl"
+        label="Image URL"
+        value={productForm.imageUrl}
+        onChange={handleFieldChange}
+        required
+      />
       {
         productForm.imageUrl && (
           <ProductImage src={productForm.imageUrl} alt={productForm.name} />
         )
       }
-      <NumberInput id="price" label="Price" value={productForm.price} onChange={(value) => setProductForm(prev => ({ ...prev, price: value ?? 0 }))} required />
+      <NumberInput
+        id="price"
+        label="Price"
+        value={productForm.price}
+        onChange={handleFieldChange}
+        required
+      />
       <SelectInput
         id="category"
         label="Category"
         options={categoryOptions}
         value={productForm.category}
-        onChange={(value) => setProductForm(prev => ({ ...prev, category: value ?? defaultCategory }))}
+        onChange={handleFieldChange}
         required
       />
-      <NumberInput id="stock" label="Stock" value={productForm.stock} onChange={(value) => setProductForm(prev => ({ ...prev, stock: value ?? 0 }))} />
-      <button type="button" onClick={onCancel}>Cancel</button>
-      <button type="submit">Save</button>
+      <NumberInput
+        id="stock"
+        label="Stock"
+        value={productForm.stock}
+        onChange={handleFieldChange}
+      />
+      <Button type="button" label="Cancel" onClick={handleCancel} />
+      <Button type="submit" label="Save" />
     </form>
   );
 };

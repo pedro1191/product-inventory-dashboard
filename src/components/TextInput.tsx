@@ -1,13 +1,13 @@
-interface TextInputProps {
-  id: string;
+interface TextInputProps<T extends string = string> {
+  id: T;
   label: string;
   placeholder?: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (id: T, value: string) => void;
   required?: boolean;
 }
 
-export default function TextInput({ id, label, placeholder, value, onChange, required }: TextInputProps) {
+export default function TextInput<T extends string = string>({ id, label, placeholder, value, onChange, required }: TextInputProps<T>) {
   return (
     <div>
       <label htmlFor={id}>{label}</label>
@@ -17,7 +17,7 @@ export default function TextInput({ id, label, placeholder, value, onChange, req
         name={id}
         placeholder={placeholder}
         value={value}
-        onChange={e => onChange(e.target.value)}
+        onChange={e => onChange(id, e.target.value)}
         required={required}
       />
     </div>

@@ -1,22 +1,19 @@
+import { useState } from "react";
 import type { Product, TableViewMode } from "../models";
 import ProductTableRow from "./ProductTableRow";
 import ProductTableHeader from "./ProductTableHeader";
-import { useState } from "react";
 import ProductTableCard from "./ProductTableCard";
 
 interface ProductTableProps {
   products: Product[];
-  onClickAddProduct?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickEditProduct?: (productId: Product['id']) => void;
-  onClickDeleteProduct?: (productId: Product['id']) => void;
 }
 
-export default function ProductTable({ products, onClickAddProduct, onClickEditProduct, onClickDeleteProduct }: ProductTableProps) {
+export default function ProductTable({ products }: ProductTableProps) {
   const [viewMode, setViewMode] = useState<TableViewMode>('table');
 
   return (
     <div>
-      <ProductTableHeader onClickAddProduct={onClickAddProduct} viewMode={viewMode} onChangeViewMode={setViewMode} />
+      <ProductTableHeader viewMode={viewMode} onChangeViewMode={setViewMode} />
       {viewMode === 'table' ? (
         <table>
           <thead>
@@ -31,27 +28,17 @@ export default function ProductTable({ products, onClickAddProduct, onClickEditP
           <tbody>
             {
               products.map((product) => (
-                <ProductTableRow
-                  product={product}
-                  key={product.id}
-                  onClickEdit={onClickEditProduct}
-                  onClickDelete={onClickDeleteProduct}
-                />
+                <ProductTableRow key={product.id} product={product} />
               ))
             }
           </tbody>
         </table>
       )
         : (
-          <div className="product-grid">
+          <div>
             {
               products.map((product) => (
-                <ProductTableCard
-                  product={product}
-                  key={product.id}
-                  onClickEdit={onClickEditProduct}
-                  onClickDelete={onClickDeleteProduct}
-                />
+                <ProductTableCard key={product.id} product={product} />
               ))
             }
           </div>

@@ -1,10 +1,11 @@
 interface ButtonProps {
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
   label?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export default function Button({ label, onClick }: ButtonProps) {
+export default function Button({ type = "button", label, onClick }: ButtonProps) {
   return (
-    <button type="button" onClick={onClick}>{label}</button>
+    <button type={type} onClick={onClick}>{label}</button>
   );
 };

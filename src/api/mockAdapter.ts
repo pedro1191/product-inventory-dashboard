@@ -6,7 +6,7 @@ import type { Product } from '../models';
 const mock = new MockAdapter(apiClient, { delayResponse: 500 });
 
 export const setupMocks = () => {
-  let products: Product[] = getDataFromStorage();
+  const products: Product[] = getDataFromStorage();
 
   mock.onGet('/products').reply(() => {
     if (shouldFail()) {

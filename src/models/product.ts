@@ -1,4 +1,4 @@
-import type { Nullable, PriceRange } from "./common";
+import type { Nullable } from "./common";
 
 export type ProductCategory = 'Electronics' | 'Clothing' | 'Grocery';
 export type ProductStockStatus = 'In Stock' | 'Low Stock' | 'Out of Stock';
@@ -17,5 +17,16 @@ export interface ProductFilters {
   category: Nullable<ProductCategory>;
   stockStatus: Nullable<ProductStockStatus>;
   search: string;
-  priceRange: PriceRange;
+  minPrice: Nullable<number>;
+  maxPrice: Nullable<number>;
+}
+
+export interface ProductForm {
+  id: string;
+  name: string;
+  description: string;
+  price: Nullable<number>;
+  category: Nullable<ProductCategory>;
+  stock: Nullable<number>;
+  imageUrl: string;
 }

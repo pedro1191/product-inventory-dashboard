@@ -3,21 +3,26 @@ import './App.css'
 import ProductTableFilters from './components/ProductTableFilters'
 import ProductTable from './components/ProductTable'
 import type { Nullable, Product, ProductFilters } from './models';
-import Modal from './components/Modal';
-import ProductForm from './components/ProductForm';
 import { ProductService } from './services';
 import InventoryStats from './components/InventoryStats';
 import { emptyFilters } from './constants';
 import Toast from './components/Toast';
 import type { ErrorResponse } from './models/api';
+import {
+  ProductSelectionProvider,
+  useProductSelectionContext,
+  useProductSelectionDispatchContext
+} from './contexts';
+import ProductFormModal from './components/ProductFormModal';
+import ProductDeleteConfirmationModal from './components/ProductDeleteConfirmationModal';
 
-function App() {
+function AppContent() {
   const [products, setProducts] = useState<Product[]>([]);
   const [filters, setFilters] = useState<ProductFilters>({ ...emptyFilters });
-  const [selectedProductId, setSelectedProductId] = useState<Product['id'] | null>(null);
-  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<Nullable<string>>(null);
+
+  const { selectedProductId, isProductModalOpen, isConfirmationModalOpen } = useProductSelectionContext();
+  const dispatch = useProductSelectionDispatchContext();
 
   const selectedProduct = products.find(p => p.id === selectedProductId) ?? null;
 
@@ -42,10 +47,10 @@ function App() {
     if (filters.stockStatus === 'Out of Stock' && product.stock > 0) {
       return false;
     }
-    if (filters.priceRange.min !== null && product.price < filters.priceRange.min) {
+    if (filters.minPrice !== null && product.price < filters.minPrice) {
       return false;
     }
-    if (filters.priceRange.max !== null && product.price > filters.priceRange.max) {
+    if (filters.maxPrice !== null && product.price > filters.maxPrice) {
       return false;
     }
     if (filters.search && !product.name.toLowerCase().includes(filters.search.toLowerCase()) && !product.description.toLowerCase().includes(filters.search.toLowerCase())) {
@@ -78,7 +83,7 @@ function App() {
       } else {
         await ProductService.addProduct(product);
       }
-      handleCloseModal();
+      dispatch({ type: 'closed_product_modal' });
       const updatedProducts = await ProductService.fetchProducts();
       setProducts(updatedProducts);
       showToast("Product saved successfully");
@@ -88,34 +93,6 @@ function App() {
     }
   }
 
-  const handleCloseModal = () => {
-    setIsProductModalOpen(false);
-  }
-
-  const handleCloseConfirmationModal = () => {
-    setIsConfirmationModalOpen(false);
-  }
-
-  const handleClickAddProduct = () => {
-    setSelectedProductId(null);
-    setIsProductModalOpen(true);
-  }
-
-  const handleClickEditProduct = (productId: Product['id']) => {
-    setSelectedProductId(productId);
-    setIsProductModalOpen(true);
-  }
-
-  const handleClickDeleteProduct = (productId: Product['id']) => {
-    setSelectedProductId(productId);
-    setIsConfirmationModalOpen(true);
-  }
-
-  const handleClickCancelDeleteProduct = () => {
-    setSelectedProductId(null);
-    setIsConfirmationModalOpen(false);
-  }
-
   const handleClickConfirmDeleteProduct = async () => {
     if (!selectedProductId) return;
 
@@ -123,8 +100,7 @@ function App() {
       await ProductService.deleteProduct(selectedProductId);
       const updatedProducts = await ProductService.fetchProducts();
       setProducts(updatedProducts);
-      setSelectedProductId(null);
-      setIsConfirmationModalOpen(false);
+      dispatch({ type: 'cleared_selection' });
       showToast("Product deleted successfully");
     } catch (e: unknown) {
       const errorMessage = (e as ErrorResponse).error ?? 'An unexpected error occurred while deleting the product';
@@ -142,33 +118,20 @@ function App() {
           onFiltersChange={setFilters}
         />
       </div>
-      <ProductTable
-        products={filteredProducts}
-        onClickAddProduct={handleClickAddProduct}
-        onClickEditProduct={handleClickEditProduct}
-        onClickDeleteProduct={handleClickDeleteProduct}
-      />
-      <Modal isOpen={isProductModalOpen} onClose={handleCloseModal}>
-        <ProductForm
-          product={selectedProduct}
-          onCancel={handleCloseModal}
-          onSave={handleSaveProduct}
-        />
-      </Modal>
-      <Modal isOpen={isConfirmationModalOpen} onClose={handleCloseConfirmationModal}>
-        <div>
-          <h2>Confirm Delete</h2>
-          <p>Are you sure you want to delete <strong>{selectedProduct?.name}</strong>?</p>
-          <button onClick={handleClickCancelDeleteProduct}>No</button>
-          <button onClick={handleClickConfirmDeleteProduct}>Yes</button>
-        </div>
-      </Modal>
-      <Toast
-        message={toastMessage}
-        onClose={hideToast}
-      />
+      <ProductTable products={filteredProducts} />
+      <ProductFormModal isOpen={isProductModalOpen} product={selectedProduct} onSave={handleSaveProduct} />
+      <ProductDeleteConfirmationModal isOpen={isConfirmationModalOpen} product={selectedProduct} onConfirm={handleClickConfirmDeleteProduct} />
+      <Toast message={toastMessage} onClose={hideToast} />
     </>
   )
+}
+
+function App() {
+  return (
+    <ProductSelectionProvider>
+      <AppContent />
+    </ProductSelectionProvider>
+  );
 }
 
 export default App
