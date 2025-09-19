@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import type { Nullable } from "../models";
 import { TOAST_DURATION_IN_MS } from "../constants";
+import { useToast } from "../hooks";
 import Button from "./Button";
 
 interface ToastProps {
@@ -9,15 +9,7 @@ interface ToastProps {
 }
 
 export default function Toast({ message, onClose }: ToastProps) {
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, TOAST_DURATION_IN_MS);
-
-      return () => clearTimeout(timer);
-    }
-  }, [message, onClose]);
+  useToast(message, TOAST_DURATION_IN_MS, onClose);
 
   if (!message) {
     return null;
