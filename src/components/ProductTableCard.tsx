@@ -15,11 +15,11 @@ export default function ProductTableCard({ product }: ProductTableCardProps) {
 
   const handleEdit = useCallback(() => {
     dispatch({ type: 'opened_edit_product_modal', productId: product.id });
-  }, [dispatch]);
+  }, [dispatch, product.id]);
 
   const handleDelete = useCallback(() => {
     dispatch({ type: 'opened_delete_confirmation_modal', productId: product.id });
-  }, [dispatch]);
+  }, [dispatch, product.id]);
 
   return (
     <div className="product-card">

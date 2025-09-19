@@ -15,11 +15,11 @@ export default function ProductTableRow({ product }: ProductTableRowProps) {
 
   const handleEdit = useCallback(() => {
     dispatch({ type: 'opened_edit_product_modal', productId: product.id });
-  }, [dispatch]);
+  }, [dispatch, product.id]);
 
   const handleDelete = useCallback(() => {
     dispatch({ type: 'opened_delete_confirmation_modal', productId: product.id });
-  }, [dispatch]);
+  }, [dispatch, product.id]);
 
   return (
     <tr>
