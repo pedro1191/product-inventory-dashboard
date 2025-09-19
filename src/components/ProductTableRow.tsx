@@ -1,5 +1,6 @@
 import { useProductSelectionDispatchContext } from "../contexts";
 import type { Product } from "../models";
+import { getStockStatus } from "../utils";
 import Button from "./Button";
 import ProductImage from "./ProductImage";
 
@@ -8,12 +9,8 @@ interface ProductTableRowProps {
 }
 
 export default function ProductTableRow({ product }: ProductTableRowProps) {
-  const stockStatus = product.stock <= 0
-    ? 'Out of Stock'
-    : product.stock > 0 && product.stock <= 5
-      ? 'Low Stock'
-      : 'In Stock';
   const dispatch = useProductSelectionDispatchContext();
+  const stockStatus = getStockStatus(product.stock);
 
   return (
     <tr>

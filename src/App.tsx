@@ -8,6 +8,7 @@ import InventoryStats from './components/InventoryStats';
 import { emptyFilters } from './constants';
 import Toast from './components/Toast';
 import type { ErrorResponse } from './models/api';
+import { matchesStockStatus } from './utils';
 import {
   ProductSelectionProvider,
   useProductSelectionContext,
@@ -38,13 +39,7 @@ function AppContent() {
     if (filters.category !== null && product.category !== filters.category) {
       return false;
     }
-    if (filters.stockStatus === 'In Stock' && product.stock <= 0) {
-      return false;
-    }
-    if (filters.stockStatus === 'Low Stock' && !(product.stock > 0 && product.stock <= 5)) {
-      return false;
-    }
-    if (filters.stockStatus === 'Out of Stock' && product.stock > 0) {
+    if (filters.stockStatus !== null && !matchesStockStatus(product.stock, filters.stockStatus)) {
       return false;
     }
     if (filters.minPrice !== null && product.price < filters.minPrice) {

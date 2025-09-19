@@ -5,3 +5,8 @@ export const stockStatusOptions: OptionModel<ProductStockStatus>[] = [
   { key: 'Low Stock', label: 'Low Stock' },
   { key: 'Out of Stock', label: 'Out of Stock' },
 ] as const;
+
+export const STOCK_THRESHOLDS = {
+  LOW_STOCK: 5,
+  OUT_OF_STOCK: 0,
+} as const;

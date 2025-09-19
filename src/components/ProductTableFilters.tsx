@@ -11,7 +11,6 @@ interface ProductTableFiltersProps {
 }
 
 export default function ProductTableFilters({ filters, onFiltersChange }: ProductTableFiltersProps) {
-
   const handleFieldChange = useCallback(<K extends keyof ProductFilters>(
     field: K,
     value: ProductFilters[K]
