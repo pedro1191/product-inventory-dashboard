@@ -1,0 +1,1 @@
+export { useInventoryStats } from './useInventoryStats';
