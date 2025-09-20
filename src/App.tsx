@@ -1,4 +1,3 @@
-import './App.css'
 import Toast from './components/Toast';
 import HomePage from './pages/HomePage';
 import { ProductSelectionProvider, ToastProvider, useToastContext } from './contexts';
