@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import ProductTableFilters from '../components/ProductTableFilters'
 import ProductTable from '../components/ProductTable'
-import type { Product, ProductFilters } from '../models';
+import type { Product } from '../models';
 import InventoryStats from '../components/InventoryStats';
-import { emptyFilters } from '../constants';
-import { matchesStockStatus, isAbortError } from '../utils';
+import { isAbortError } from '../utils';
 import {
   useProductSelectionContext,
   useProductSelectionDispatchContext,
@@ -12,41 +11,22 @@ import {
 } from '../contexts';
 import ProductFormModal from '../components/ProductFormModal';
 import ProductDeleteConfirmationModal from '../components/ProductDeleteConfirmationModal';
-import { useProductApi } from '../hooks';
+import { useProductApi, useProductFilters } from '../hooks';
 
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [filters, setFilters] = useState<ProductFilters>({ ...emptyFilters });
 
   const { selectedProductId, isProductModalOpen, isConfirmationModalOpen } = useProductSelectionContext();
   const dispatch = useProductSelectionDispatchContext();
   const toastDispatch = useToastDispatchContext();
   const { loadProducts, addProduct, updateProduct, deleteProduct } = useProductApi();
+  const { filters, setFilters, filteredProducts } = useProductFilters(products);
 
   const selectedProduct = products.find(p => p.id === selectedProductId) ?? null;
 
   const showToast = useCallback((message: string) => {
     toastDispatch({ type: 'showed_toast', message });
   }, [toastDispatch]);
-
-  const filteredProducts = products.filter(product => {
-    if (filters.category !== null && product.category !== filters.category) {
-      return false;
-    }
-    if (filters.stockStatus !== null && !matchesStockStatus(product.stock, filters.stockStatus)) {
-      return false;
-    }
-    if (filters.minPrice !== null && product.price < filters.minPrice) {
-      return false;
-    }
-    if (filters.maxPrice !== null && product.price > filters.maxPrice) {
-      return false;
-    }
-    if (filters.search && !product.name.toLowerCase().includes(filters.search.toLowerCase()) && !product.description.toLowerCase().includes(filters.search.toLowerCase())) {
-      return false;
-    }
-    return true;
-  });
 
   const fetchProducts = useCallback(async () => {
     try {
