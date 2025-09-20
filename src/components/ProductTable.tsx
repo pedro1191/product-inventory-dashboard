@@ -3,13 +3,19 @@ import type { Product, TableViewMode } from "../models";
 import ProductTableRow from "./ProductTableRow";
 import ProductTableHeader from "./ProductTableHeader";
 import ProductTableCard from "./ProductTableCard";
+import { ProductTableLoader } from "./loaders/ProductTableLoader";
 
 interface ProductTableProps {
+  isLoading?: boolean;
   products: Product[];
 }
 
-export default function ProductTable({ products }: ProductTableProps) {
+export default function ProductTable({ isLoading, products }: ProductTableProps) {
   const [viewMode, setViewMode] = useState<TableViewMode>('table');
+
+  if (isLoading) {
+    return <ProductTableLoader viewMode={viewMode} />;
+  }
 
   return (
     <div>
@@ -26,6 +32,11 @@ export default function ProductTable({ products }: ProductTableProps) {
             </tr>
           </thead>
           <tbody>
+            {
+              products.length === 0 && (
+                <tr><td colSpan={5}>No products found</td></tr>
+              )
+            }
             {
               products.map((product) => (
                 <ProductTableRow key={product.id} product={product} />

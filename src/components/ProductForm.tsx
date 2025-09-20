@@ -9,11 +9,12 @@ import { useProductSelectionDispatchContext } from "../contexts";
 import Button from "./Button";
 
 interface ProductFormProps {
+  isLoading?: boolean;
   product: Nullable<Product>
-  onSave?: (product: Product) => void;
+  onSave: (product: Product) => void;
 }
 
-export default function ProductForm({ product, onSave }: ProductFormProps) {
+export default function ProductForm({ isLoading, product, onSave }: ProductFormProps) {
   const [productForm, setProductForm] = useState<ProductForm>(product ?? emptyProductForm);
   const dispatch = useProductSelectionDispatchContext();
 
@@ -34,7 +35,7 @@ export default function ProductForm({ product, onSave }: ProductFormProps) {
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSave?.(productForm as Product);
+    onSave(productForm as Product);
   }
 
   return (
@@ -86,8 +87,8 @@ export default function ProductForm({ product, onSave }: ProductFormProps) {
         value={productForm.stock}
         onChange={handleFieldChange}
       />
-      <Button type="button" label="Cancel" onClick={handleCancel} />
-      <Button type="submit" label="Save" />
+      <Button disabled={isLoading} type="button" label="Cancel" onClick={handleCancel} />
+      <Button disabled={isLoading} type="submit" label={isLoading ? "Saving..." : "Save"} />
     </form>
   );
 };

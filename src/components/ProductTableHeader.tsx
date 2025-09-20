@@ -7,7 +7,7 @@ import { useProductSelectionDispatchContext } from "../contexts";
 
 interface ProductTableHeaderProps {
   viewMode: TableViewMode;
-  onChangeViewMode?: (mode: TableViewMode) => void;
+  onChangeViewMode: (mode: TableViewMode) => void;
 }
 
 export default function ProductTableHeader({ viewMode, onChangeViewMode }: ProductTableHeaderProps) {

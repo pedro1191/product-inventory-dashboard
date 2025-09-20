@@ -8,7 +8,7 @@ export function useProductApi() {
   const [loadingStates, setLoadingStates] = useState<LoadingStates>({
     loading: false,
     adding: false,
-    editing: false,
+    updating: false,
     deleting: false,
   });
 
@@ -59,16 +59,16 @@ export function useProductApi() {
     const controller = createAbortController('updateProduct');
 
     try {
-      setLoading('editing', true);
+      setLoading('updating', true);
 
       const response = await apiClient.put(`/products/${product.id}`, product, {
         signal: controller.signal
       });
       return response.data;
     } catch (e) {
-      return handleApiError(e, 'editing', controller);
+      return handleApiError(e, 'updating', controller);
     } finally {
-      setLoading('editing', false);
+      setLoading('updating', false);
     }
   }, [setLoading, handleApiError, createAbortController]);
 

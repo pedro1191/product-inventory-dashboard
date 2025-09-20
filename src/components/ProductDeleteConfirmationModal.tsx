@@ -5,12 +5,13 @@ import Button from "./Button";
 import Modal from "./Modal";
 
 interface ProductDeleteConfirmationModalProps {
+  isLoading?: boolean;
   product: Nullable<Product>;
   isOpen?: boolean;
   onConfirm: (productId: Product['id']) => Promise<void>;
 }
 
-export default function ProductDeleteConfirmationModal({ isOpen, product, onConfirm }: ProductDeleteConfirmationModalProps) {
+export default function ProductDeleteConfirmationModal({ isOpen, product, isLoading, onConfirm }: ProductDeleteConfirmationModalProps) {
   const dispatch = useProductSelectionDispatchContext();
 
   const handleCloseModal = useCallback(() => {
@@ -27,8 +28,8 @@ export default function ProductDeleteConfirmationModal({ isOpen, product, onConf
       <div>
         <h2>Confirm Delete</h2>
         <p>Are you sure you want to delete <strong>{product?.name}</strong>?</p>
-        <Button label="No" onClick={handleCloseModal} />
-        <Button label="Yes" onClick={handleConfirm} />
+        <Button disabled={isLoading} label="No" onClick={handleCloseModal} />
+        <Button disabled={isLoading} label={isLoading ? "Deleting..." : "Yes"} onClick={handleConfirm} />
       </div>
     </Modal>
   );

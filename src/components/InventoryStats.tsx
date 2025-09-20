@@ -3,11 +3,16 @@ import { formatPrice } from "../utils";
 import { useInventoryStats } from "../hooks";
 
 interface InventoryStatsProps {
+  isLoading?: boolean;
   products: Product[];
 }
 
-export default function InventoryStats({ products }: InventoryStatsProps) {
+export default function InventoryStats({ isLoading, products }: InventoryStatsProps) {
   const stats = useInventoryStats(products);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>

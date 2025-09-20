@@ -3,7 +3,7 @@ import type { OptionModel } from "../models";
 interface ToggleProps<T extends string = string> {
   value: T;
   options: OptionModel<T>[];
-  onChange?: (value: T) => void;
+  onChange: (value: T) => void;
 }
 
 export default function Toggle<T extends string = string>({ value, options, onChange }: ToggleProps<T>) {
@@ -15,7 +15,7 @@ export default function Toggle<T extends string = string>({ value, options, onCh
             <input
               type="radio"
               checked={value === option.key}
-              onChange={() => onChange?.(option.key)}
+              onChange={() => onChange(option.key)}
             />
             {option.label}
           </label>

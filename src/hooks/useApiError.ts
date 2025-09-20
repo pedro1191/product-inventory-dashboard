@@ -9,7 +9,7 @@ import type { ApiError } from '../models';
 export function useApiError() {
   const createError = useCallback((
     error: unknown,
-    operation: 'loading' | 'adding' | 'editing' | 'deleting'
+    operation: 'loading' | 'adding' | 'updating' | 'deleting'
   ): ApiError => {
     if (error instanceof AxiosError) {
       const status = error.response?.status;
@@ -27,7 +27,7 @@ export function useApiError() {
 
   const handleApiError = useCallback((
     error: unknown,
-    operation: 'loading' | 'adding' | 'editing' | 'deleting',
+    operation: 'loading' | 'adding' | 'updating' | 'deleting',
     controller: AbortController
   ): never => {
     if (controller.signal.aborted) {
