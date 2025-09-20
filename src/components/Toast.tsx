@@ -1,25 +1,27 @@
-import type { Nullable } from "../models";
+import { useCallback } from "react";
 import { TOAST_DURATION_IN_MS } from "../constants";
-import { useToast } from "../hooks";
+import { useTimeout } from "../hooks";
+import { useToastContext, useToastDispatchContext } from "../contexts";
 import Button from "./Button";
 
-interface ToastProps {
-  message: Nullable<string>;
-  onClose: () => void;
-}
+export default function Toast() {
+  const { message } = useToastContext();
+  const dispatch = useToastDispatchContext();
 
-export default function Toast({ message, onClose }: ToastProps) {
-  useToast(message, TOAST_DURATION_IN_MS, onClose);
+  const { clear } = useTimeout(() => {
+    dispatch({ type: 'hid_toast' });
+  }, TOAST_DURATION_IN_MS);
 
-  if (!message) {
-    return null;
-  }
+  const handleClose = useCallback(() => {
+    clear();
+    dispatch({ type: 'hid_toast' });
+  }, [clear, dispatch]);
 
   return (
     <div>
       <div>
         <span>{message}</span>
-        <Button label="Close" onClick={onClose} />
+        <Button label="Close" onClick={handleClose} />
       </div>
     </div>
   );
