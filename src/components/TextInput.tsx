@@ -9,7 +9,7 @@ interface TextInputProps<T extends string = string> {
 
 export default function TextInput<T extends string = string>({ id, label, placeholder, value, onChange, required }: TextInputProps<T>) {
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <label htmlFor={id}>{label}</label>
       <input
         type="text"

@@ -15,13 +15,17 @@ export default function HomePage() {
   const selectedProduct = useMemo(() => products.find(p => p.id === selectedProductId) ?? null, [products, selectedProductId]);
 
   return (
-    <>
-      <h1>Product Inventory Dashboard</h1>
-      <InventoryStats isLoading={loadingStates.loading} products={products} />
-      <ProductTableFilters filters={filters} onFiltersChange={setFilters} />
-      <ProductTable isLoading={loadingStates.loading} products={filteredProducts} />
-      <ProductFormModal isOpen={isProductModalOpen} isLoading={loadingStates.adding || loadingStates.updating} product={selectedProduct} onSave={saveProduct} />
-      <ProductDeleteConfirmationModal isOpen={isConfirmationModalOpen} isLoading={loadingStates.deleting} product={selectedProduct} onConfirm={deleteProduct} />
-    </>
+    <div className="flex flex-col mx-auto p-10 bg-brand-surface">
+      <div className="flex flex-col gap-5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <h1>Product Inventory Dashboard</h1>
+          <InventoryStats isLoading={loadingStates.loading} products={products} />
+        </div>
+        <ProductTableFilters filters={filters} onFiltersChange={setFilters} />
+        <ProductTable isLoading={loadingStates.loading} products={filteredProducts} />
+        <ProductFormModal isOpen={isProductModalOpen} isLoading={loadingStates.adding || loadingStates.updating} product={selectedProduct} onSave={saveProduct} />
+        <ProductDeleteConfirmationModal isOpen={isConfirmationModalOpen} isLoading={loadingStates.deleting} product={selectedProduct} onConfirm={deleteProduct} />
+      </div>
+    </div>
   )
 }

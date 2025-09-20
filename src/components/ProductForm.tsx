@@ -39,56 +39,62 @@ export default function ProductForm({ isLoading, product, onSave }: ProductFormP
   }
 
   return (
-    <form onSubmit={handleSave}>
-      <TextInput
-        id="name"
-        label="Name"
-        value={productForm.name}
-        onChange={handleFieldChange}
-        required
-      />
-      <TextInput
-        id="description"
-        label="Description"
-        value={productForm.description}
-        onChange={handleFieldChange}
-        required
-      />
-      <TextInput
-        id="imageUrl"
-        label="Image URL"
-        value={productForm.imageUrl}
-        onChange={handleFieldChange}
-        required
-      />
-      {
-        productForm.imageUrl && (
-          <ProductImage src={productForm.imageUrl} alt={productForm.name} />
-        )
-      }
-      <NumberInput
-        id="price"
-        label="Price"
-        value={productForm.price}
-        onChange={handleFieldChange}
-        required
-      />
-      <SelectInput
-        id="category"
-        label="Category"
-        options={categoryOptions}
-        value={productForm.category}
-        onChange={handleFieldChange}
-        required
-      />
-      <NumberInput
-        id="stock"
-        label="Stock"
-        value={productForm.stock}
-        onChange={handleFieldChange}
-      />
-      <Button disabled={isLoading} type="button" label="Cancel" onClick={handleCancel} />
-      <Button disabled={isLoading} type="submit" label={isLoading ? "Saving..." : "Save"} />
+    <form className="flex flex-col gap-10 w-full max-w-lg min-w-xs" onSubmit={handleSave}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+        <TextInput
+          id="name"
+          label="Name"
+          value={productForm.name}
+          onChange={handleFieldChange}
+          required
+        />
+        <TextInput
+          id="description"
+          label="Description"
+          value={productForm.description}
+          onChange={handleFieldChange}
+          required
+        />
+        <div className="flex flex-col gap-2">
+          <TextInput
+            id="imageUrl"
+            label="Image URL"
+            value={productForm.imageUrl}
+            onChange={handleFieldChange}
+            required
+          />
+          {
+            productForm.imageUrl && (
+              <ProductImage src={productForm.imageUrl} alt={productForm.name} />
+            )
+          }
+        </div>
+        <NumberInput
+          id="price"
+          label="Price"
+          value={productForm.price}
+          onChange={handleFieldChange}
+          required
+        />
+        <SelectInput
+          id="category"
+          label="Category"
+          options={categoryOptions}
+          value={productForm.category}
+          onChange={handleFieldChange}
+          required
+        />
+        <NumberInput
+          id="stock"
+          label="Stock"
+          value={productForm.stock}
+          onChange={handleFieldChange}
+        />
+      </div>
+      <div className="flex flex-row gap-2">
+        <Button className="primary-button-outline" disabled={isLoading} type="button" label="Cancel" onClick={handleCancel} />
+        <Button className="primary-button" disabled={isLoading} type="submit" label={isLoading ? "Saving..." : "Save"} />
+      </div>
     </form>
   );
 };

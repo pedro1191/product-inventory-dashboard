@@ -14,11 +14,6 @@ export const setupMocks = () => {
       return Promise.reject(new DOMException('Request cancelled', 'AbortError'));
     }
 
-    if (shouldFail()) {
-      console.log('Mock: Simulating fetch failure');
-      return getRandomError();
-    }
-
     console.log('Mock: Fetching products');
 
     return [200, products];

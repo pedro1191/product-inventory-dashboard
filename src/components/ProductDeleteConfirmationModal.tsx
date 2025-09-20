@@ -25,11 +25,15 @@ export default function ProductDeleteConfirmationModal({ isOpen, product, isLoad
 
   return (
     <Modal isOpen={isOpen} onClose={handleCloseModal}>
-      <div>
-        <h2>Confirm Delete</h2>
-        <p>Are you sure you want to delete <strong>{product?.name}</strong>?</p>
-        <Button disabled={isLoading} label="No" onClick={handleCloseModal} />
-        <Button disabled={isLoading} label={isLoading ? "Deleting..." : "Yes"} onClick={handleConfirm} />
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2">
+          <h2>Confirm Delete</h2>
+          <p>Are you sure you want to delete <strong>{product?.name}</strong>?</p>
+        </div>
+        <div className="flex flex-row gap-2">
+          <Button className="primary-button-outline" disabled={isLoading} label="No" onClick={handleCloseModal} />
+          <Button className="primary-button" disabled={isLoading} label={isLoading ? "Deleting..." : "Yes"} onClick={handleConfirm} />
+        </div>
       </div>
     </Modal>
   );

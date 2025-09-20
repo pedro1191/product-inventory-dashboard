@@ -11,7 +11,7 @@ interface NumberInputProps<T extends string = string> {
 
 export default function NumberInput<T extends string = string>({ id, label, placeholder, value, onChange, required }: NumberInputProps<T>) {
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <label htmlFor={id}>{label}</label>
       <input
         type="number"

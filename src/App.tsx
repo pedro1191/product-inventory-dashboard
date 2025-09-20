@@ -6,12 +6,12 @@ function AppContent() {
   const { isVisible } = useToastContext();
 
   return (
-    <>
+    <div className="bg-brand-background">
       <ProductSelectionProvider>
         <HomePage />
       </ProductSelectionProvider>
       {isVisible && <Toast />}
-    </>
+    </div>
   );
 }
 

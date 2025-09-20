@@ -7,8 +7,9 @@ interface SearchInputProps<T extends string = string> {
 
 export default function SearchInput<T extends string = string>({ id, placeholder, value, onChange }: SearchInputProps<T>) {
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <input
+        className="border-1 max-w-md rounded-md"
         type="search"
         placeholder={placeholder}
         value={value}

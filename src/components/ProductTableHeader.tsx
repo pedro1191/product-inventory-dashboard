@@ -18,8 +18,8 @@ export default function ProductTableHeader({ viewMode, onChangeViewMode }: Produ
   }, [dispatch]);
 
   return (
-    <div>
-      <Button label="Add Product" onClick={handleClickAddProduct} />
+    <div className="flex flex-row justify-between gap-6">
+      <Button className="primary-button button-lg" label="Add Product" onClick={handleClickAddProduct} />
       <Toggle options={tableViewOptions} value={viewMode} onChange={onChangeViewMode} />
     </div>
   );

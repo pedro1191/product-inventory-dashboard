@@ -16,7 +16,7 @@ export default function SelectInput<TValue extends string = string, TId extends 
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <label htmlFor={id}>{label}</label>
       <select id={id} name={id} value={value ?? ''} onChange={handleChange} required={required}>
         <option value="">Select an item</option>

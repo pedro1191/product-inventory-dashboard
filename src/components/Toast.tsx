@@ -18,8 +18,8 @@ export default function Toast() {
   }, [clear, dispatch]);
 
   return (
-    <div>
-      <div>
+    <div className="fixed w-full flex justify-center bottom-10 z-10">
+      <div className="flex flex-row gap-3 rounded-xl border p-3">
         <span>{message}</span>
         <Button label="Close" onClick={handleClose} />
       </div>

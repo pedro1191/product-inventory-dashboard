@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useProductSelectionDispatchContext } from "../contexts";
 import type { Nullable, Product } from "../models";
 import Modal from "./Modal";
@@ -13,13 +14,16 @@ interface ProductFormModalProps {
 export default function ProductFormModal({ isOpen, product, isLoading, onSave }: ProductFormModalProps) {
   const dispatch = useProductSelectionDispatchContext();
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     dispatch({ type: 'closed_product_modal' });
-  };
+  }, [dispatch]);
 
   return (
     <Modal isOpen={isOpen} onClose={handleCloseModal}>
-      <ProductForm isLoading={isLoading} product={product} onSave={onSave} />
+      <div className="flex flex-col gap-10">
+        <h2>{product ? 'Edit Product' : 'Add Product'}</h2>
+        <ProductForm isLoading={isLoading} product={product} onSave={onSave} />
+      </div>
     </Modal>
   );
 }

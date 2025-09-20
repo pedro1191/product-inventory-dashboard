@@ -1,1 +1,50 @@
 @import "tailwindcss";
+
+@theme {
+  --color-brand-text: oklch(36.19% 0.019 169.91);
+  --color-brand-background: oklch(97.31% 0.000 89.88);
+  --color-brand-card-background: oklch(100.00% 0.000 89.88);
+  --color-brand-primary: oklch(43.80% 0.049 174.34);
+  --color-brand-secondary: oklch(81.81% 0.041 202.16);
+  --color-brand-accent: oklch(66.72% 0.096 211.35);
+  --color-brand-border: oklch(90.06% 0.000 89.88);
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl font-bold text-brand-primary;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold text-brand-primary;
+  }
+
+  button {
+    @apply inline-flex justify-center rounded-md px-5 py-1 text-base font-medium border;
+  }
+
+  label {
+    @apply text-lg font-bold;
+  }
+
+  input,
+  select {
+    @apply px-4 py-3.5 border-b-1 border-brand-border h-full;
+  }
+}
+
+@utility card {
+  @apply bg-brand-card-background rounded-xl shadow-md p-6 border-1 border-brand-border;
+}
+
+@utility primary-button {
+  @apply bg-brand-accent text-white;
+}
+
+@utility primary-button-outline {
+  @apply bg-brand-card-background border-2 text-brand-accent border-brand-accent;
+}
+
+@utility button-lg {
+  @apply text-lg px-5 py-2;
+}

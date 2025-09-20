@@ -22,14 +22,20 @@ export default function ProductTableCard({ product }: ProductTableCardProps) {
   }, [dispatch, product.id]);
 
   return (
-    <div className="product-card">
-      <h3>{product.name}</h3>
+    <div className="flex flex-col gap-4 card">
+      <div className="text-lg font-bold">{product.name}</div>
       <ProductImage src={product.imageUrl} alt={product.name} />
-      <p>Price: {formatPrice(product.price)}</p>
-      <p>Category: {product.category}</p>
-      <p>Stock Status: {stockStatus}</p>
-      <Button label="Edit" onClick={handleEdit} />
-      <Button label="Delete" onClick={handleDelete} />
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-3">
+          <p className="text-base font-bold">Price: <span className="font-normal">{formatPrice(product.price)}</span></p>
+          <p className="text-base font-bold">Category: <span className="font-normal">{product.category}</span></p>
+          <p className="text-base font-bold">Stock Status: <span className="font-normal">{stockStatus}</span></p>
+        </div>
+        <div className="flex flex-row gap-3">
+          <Button className="primary-button" label="Edit" onClick={handleEdit} />
+          <Button className="primary-button-outline" label="Delete" onClick={handleDelete} />
+        </div>
+      </div>
     </div>
   );
 }
