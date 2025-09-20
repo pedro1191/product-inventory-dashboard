@@ -8,7 +8,12 @@ const mock = new MockAdapter(apiClient, { delayResponse: 500 });
 export const setupMocks = () => {
   const products: Product[] = getDataFromStorage();
 
-  mock.onGet('/products').reply(() => {
+  mock.onGet('/products').reply((config) => {
+    if (config.signal?.aborted) {
+      console.log('Mock: Request was aborted');
+      return Promise.reject(new DOMException('Request cancelled', 'AbortError'));
+    }
+
     if (shouldFail()) {
       console.log('Mock: Simulating fetch failure');
       return getRandomError();
@@ -20,6 +25,11 @@ export const setupMocks = () => {
   });
 
   mock.onPost('/products').reply((config) => {
+    if (config.signal?.aborted) {
+      console.log('Mock: Request was aborted');
+      return Promise.reject(new DOMException('Request cancelled', 'AbortError'));
+    }
+
     if (shouldFail()) {
       console.log('Mock: Simulating create failure');
       return getRandomError();
@@ -35,6 +45,11 @@ export const setupMocks = () => {
   });
 
   mock.onPut(/\/products\/\w+/).reply((config) => {
+    if (config.signal?.aborted) {
+      console.log('Mock: Request was aborted');
+      return Promise.reject(new DOMException('Request cancelled', 'AbortError'));
+    }
+
     if (shouldFail()) {
       console.log('Mock: Simulating update failure');
       return getRandomError();
@@ -54,6 +69,11 @@ export const setupMocks = () => {
   });
 
   mock.onDelete(/\/products\/\w+/).reply((config) => {
+    if (config.signal?.aborted) {
+      console.log('Mock: Request was aborted');
+      return Promise.reject(new DOMException('Request cancelled', 'AbortError'));
+    }
+
     if (shouldFail()) {
       console.log('Mock: Simulating delete failure');
       return getRandomError();

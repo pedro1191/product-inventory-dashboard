@@ -2,11 +2,9 @@ import { useCallback, useEffect, useState } from 'react'
 import ProductTableFilters from '../components/ProductTableFilters'
 import ProductTable from '../components/ProductTable'
 import type { Product, ProductFilters } from '../models';
-import { ProductService } from '../services';
 import InventoryStats from '../components/InventoryStats';
 import { emptyFilters } from '../constants';
-import type { ErrorResponse } from '../models/api';
-import { matchesStockStatus } from '../utils';
+import { matchesStockStatus, isAbortError } from '../utils';
 import {
   useProductSelectionContext,
   useProductSelectionDispatchContext,
@@ -14,6 +12,7 @@ import {
 } from '../contexts';
 import ProductFormModal from '../components/ProductFormModal';
 import ProductDeleteConfirmationModal from '../components/ProductDeleteConfirmationModal';
+import { useProductApi } from '../hooks';
 
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -22,6 +21,7 @@ export default function HomePage() {
   const { selectedProductId, isProductModalOpen, isConfirmationModalOpen } = useProductSelectionContext();
   const dispatch = useProductSelectionDispatchContext();
   const toastDispatch = useToastDispatchContext();
+  const { loadProducts, addProduct, updateProduct, deleteProduct } = useProductApi();
 
   const selectedProduct = products.find(p => p.id === selectedProductId) ?? null;
 
@@ -48,52 +48,56 @@ export default function HomePage() {
     return true;
   });
 
-  useEffect(() => {
-    async function loadProducts() {
-      try {
-        const fetchedProducts = await ProductService.fetchProducts();
-        setProducts(fetchedProducts);
-      } catch (e: unknown) {
-        const errorMessage = (e as ErrorResponse).error ?? 'An unexpected error occurred while fetching products.';
-        showToast(errorMessage);
+  const fetchProducts = useCallback(async () => {
+    try {
+      const fetchedProducts = await loadProducts();
+      setProducts(fetchedProducts);
+    } catch (e) {
+      if (isAbortError(e)) {
+        return;
       }
+      console.error(e);
+      showToast('An unexpected error occurred while fetching products.');
     }
-    loadProducts();
+  }, [loadProducts, showToast, setProducts]);
 
-    return () => {
-      // TODO cleanup if necessary
-    };
-  }, []);
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handleSaveProduct = async (product: Product): Promise<void> => {
     try {
       if (product.id) {
-        await ProductService.updateProduct(product);
+        await updateProduct(product);
       } else {
-        await ProductService.addProduct(product);
+        await addProduct(product);
       }
       dispatch({ type: 'closed_product_modal' });
-      const updatedProducts = await ProductService.fetchProducts();
+      const updatedProducts = await loadProducts();
       setProducts(updatedProducts);
       showToast("Product saved successfully");
-    } catch (e: unknown) {
-      const errorMessage = (e as ErrorResponse).error ?? 'An unexpected error occurred while saving the product.';
-      showToast(errorMessage);
+    } catch (e) {
+      if (isAbortError(e)) {
+        return;
+      }
+      console.error(e);
+      showToast('An unexpected error occurred while saving the product.');
     }
   }
 
-  const handleClickConfirmDeleteProduct = async () => {
-    if (!selectedProductId) return;
-
+  const handleDeleteProduct = async (id: Product['id']) => {
     try {
-      await ProductService.deleteProduct(selectedProductId);
-      const updatedProducts = await ProductService.fetchProducts();
+      await deleteProduct(id);
+      const updatedProducts = await loadProducts();
       setProducts(updatedProducts);
       dispatch({ type: 'cleared_selection' });
       showToast("Product deleted successfully");
-    } catch (e: unknown) {
-      const errorMessage = (e as ErrorResponse).error ?? 'An unexpected error occurred while deleting the product';
-      showToast(errorMessage);
+    } catch (e) {
+      if (isAbortError(e)) {
+        return;
+      }
+      console.error(e);
+      showToast('An unexpected error occurred while deleting the product.');
     }
   }
 
@@ -104,7 +108,7 @@ export default function HomePage() {
       <ProductTableFilters filters={filters} onFiltersChange={setFilters} />
       <ProductTable products={filteredProducts} />
       <ProductFormModal isOpen={isProductModalOpen} product={selectedProduct} onSave={handleSaveProduct} />
-      <ProductDeleteConfirmationModal isOpen={isConfirmationModalOpen} product={selectedProduct} onConfirm={handleClickConfirmDeleteProduct} />
+      <ProductDeleteConfirmationModal isOpen={isConfirmationModalOpen} product={selectedProduct} onConfirm={handleDeleteProduct} />
     </>
   )
 }

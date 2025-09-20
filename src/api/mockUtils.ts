@@ -1,5 +1,8 @@
 import type { Product } from "../models";
-import type { ErrorResponse } from "../models/api";
+
+interface ErrorResponse {
+  error: string;
+}
 
 // Utility to generate unique IDs for products
 export const generateId = (): string => {
