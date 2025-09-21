@@ -1,6 +1,7 @@
 import type { Product } from "../models";
 import { formatPrice } from "../utils";
 import { useInventoryStats } from "../hooks";
+import { InventoryStatsLoader } from "./loaders/InventoryStatsLoader";
 
 interface InventoryStatsProps {
   isLoading?: boolean;
@@ -11,7 +12,7 @@ export default function InventoryStats({ isLoading, products }: InventoryStatsPr
   const stats = useInventoryStats(products);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <InventoryStatsLoader />;
   }
 
   return (

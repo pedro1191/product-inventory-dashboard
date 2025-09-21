@@ -91,9 +91,9 @@ export default function ProductForm({ isLoading, product, onSave }: ProductFormP
           onChange={handleFieldChange}
         />
       </div>
-      <div className="flex flex-row gap-2">
+      <div className="action-buttons">
         <Button className="primary-button-outline" disabled={isLoading} type="button" label="Cancel" onClick={handleCancel} />
-        <Button className="primary-button" disabled={isLoading} type="submit" label={isLoading ? "Saving..." : "Save"} />
+        <Button className="primary-button" disabled={isLoading} type="submit" label={isLoading ? "Saving..." : "Save"} isLoading={isLoading} />
       </div>
     </form>
   );

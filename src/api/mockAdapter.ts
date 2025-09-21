@@ -3,7 +3,7 @@ import apiClient from './client';
 import { generateId, getDataFromStorage, getRandomError, saveDataToStorage, shouldFail } from './mockUtils';
 import type { Product } from '../models';
 
-const mock = new MockAdapter(apiClient, { delayResponse: 500 });
+const mock = new MockAdapter(apiClient, { delayResponse: 1000 });
 
 export const setupMocks = () => {
   const products: Product[] = getDataFromStorage();

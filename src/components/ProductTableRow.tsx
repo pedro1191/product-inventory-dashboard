@@ -31,7 +31,7 @@ export default function ProductTableRow({ product }: ProductTableRowProps) {
       <td className="text-lg py-2 px-1">{product.category}</td>
       <td className="text-lg py-2 px-1">{stockStatus}</td>
       <td className="text-lg py-2 px-1">
-        <div className="flex flex-row gap-2">
+        <div className="action-buttons">
           <Button className="primary-button" label="Edit" onClick={handleEdit} />
           <Button className="primary-button-outline" label="Delete" onClick={handleDelete} />
         </div>

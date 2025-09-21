@@ -1,18 +1,27 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-brand-text: oklch(36.19% 0.019 169.91);
   --color-brand-background: oklch(97.31% 0.000 89.88);
   --color-brand-card-background: oklch(100.00% 0.000 89.88);
   --color-brand-primary: oklch(43.80% 0.049 174.34);
-  --color-brand-secondary: oklch(81.81% 0.041 202.16);
   --color-brand-accent: oklch(66.72% 0.096 211.35);
   --color-brand-border: oklch(90.06% 0.000 89.88);
 }
 
 @layer base {
+  body {
+    @apply text-brand-text bg-brand-background;
+  }
+
+  dialog {
+    @apply text-brand-text;
+  }
+
   h1 {
-    @apply text-3xl font-bold text-brand-primary;
+    @apply text-6xl font-bold text-brand-primary;
   }
 
   h2 {
@@ -20,7 +29,7 @@
   }
 
   button {
-    @apply inline-flex justify-center rounded-md px-5 py-1 text-base font-medium border;
+    @apply inline-flex justify-center items-center rounded-md px-5 py-1 text-base font-medium cursor-pointer self-stretch;
   }
 
   label {
@@ -29,7 +38,13 @@
 
   input,
   select {
-    @apply px-4 py-3.5 border-b-1 border-brand-border h-full;
+    @apply px-4 py-3.5 border-b-1 border-brand-border bg-brand-card-background h-full accent-brand-accent;
+  }
+
+  button,
+  input,
+  select {
+    @apply hover:border-brand-accent hover:opacity-75 focus:outline-2 focus:outline-brand-accent focus:border-transparent active:outline-1 active:outline-brand-accent active:border-transparent;
   }
 }
 
@@ -47,4 +62,8 @@
 
 @utility button-lg {
   @apply text-lg px-5 py-2;
+}
+
+@utility action-buttons {
+  @apply flex flex-row items-center gap-3;
 }

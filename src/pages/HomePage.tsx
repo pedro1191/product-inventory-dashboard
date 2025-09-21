@@ -17,11 +17,15 @@ export default function HomePage() {
   return (
     <div className="flex flex-col mx-auto p-10 bg-brand-surface">
       <div className="flex flex-col gap-5">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <h1>Product Inventory Dashboard</h1>
-          <InventoryStats isLoading={loadingStates.loading} products={products} />
+        <h1>Product Inventory Dashboard</h1>
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+          <div className="order-last md:order-first md:col-span-2">
+            <ProductTableFilters filters={filters} onFiltersChange={setFilters} />
+          </div>
+          <div className="sm:colspan-1">
+            <InventoryStats isLoading={loadingStates.loading} products={products} />
+          </div>
         </div>
-        <ProductTableFilters filters={filters} onFiltersChange={setFilters} />
         <ProductTable isLoading={loadingStates.loading} products={filteredProducts} />
         <ProductFormModal isOpen={isProductModalOpen} isLoading={loadingStates.adding || loadingStates.updating} product={selectedProduct} onSave={saveProduct} />
         <ProductDeleteConfirmationModal isOpen={isConfirmationModalOpen} isLoading={loadingStates.deleting} product={selectedProduct} onConfirm={deleteProduct} />

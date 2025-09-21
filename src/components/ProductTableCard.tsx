@@ -22,7 +22,7 @@ export default function ProductTableCard({ product }: ProductTableCardProps) {
   }, [dispatch, product.id]);
 
   return (
-    <div className="flex flex-col gap-4 card">
+    <div className="flex flex-col gap-4 card hover:border-brand-accent">
       <div className="text-lg font-bold">{product.name}</div>
       <ProductImage src={product.imageUrl} alt={product.name} />
       <div className="flex flex-col gap-5">
@@ -31,7 +31,7 @@ export default function ProductTableCard({ product }: ProductTableCardProps) {
           <p className="text-base font-bold">Category: <span className="font-normal">{product.category}</span></p>
           <p className="text-base font-bold">Stock Status: <span className="font-normal">{stockStatus}</span></p>
         </div>
-        <div className="flex flex-row gap-3">
+        <div className="action-buttons">
           <Button className="primary-button" label="Edit" onClick={handleEdit} />
           <Button className="primary-button-outline" label="Delete" onClick={handleDelete} />
         </div>
