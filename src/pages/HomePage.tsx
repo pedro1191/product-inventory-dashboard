@@ -1,6 +1,7 @@
 import ProductTableFilters from '../components/ProductTableFilters'
 import ProductTable from '../components/ProductTable'
 import InventoryStats from '../components/InventoryStats';
+import ThemeToggle from '../components/ThemeToggle';
 import { useProductSelectionContext } from '../contexts';
 import ProductFormModal from '../components/ProductFormModal';
 import ProductDeleteConfirmationModal from '../components/ProductDeleteConfirmationModal';
@@ -17,7 +18,10 @@ export default function HomePage() {
   return (
     <div className="flex flex-col mx-auto p-10 bg-brand-surface">
       <div className="flex flex-col gap-5">
-        <h1>Product Inventory Dashboard</h1>
+        <div className="flex justify-between items-center">
+          <h1>Product Inventory Dashboard</h1>
+          <ThemeToggle />
+        </div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           <div className="order-last md:order-first md:col-span-2">
             <ProductTableFilters filters={filters} onFiltersChange={setFilters} />

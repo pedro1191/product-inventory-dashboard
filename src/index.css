@@ -11,6 +11,15 @@
   --color-brand-border: oklch(90.06% 0.000 89.88);
 }
 
+.dark {
+  --color-brand-text: oklch(95.96% 0.010 174.27);
+  --color-brand-background: oklch(28.84% 0.007 164.52);
+  --color-brand-card-background: oklch(37.34% 0.003 197.04);
+  --color-brand-primary: oklch(80.27% 0.033 176.94);
+  --color-brand-accent: oklch(70.15% 0.097 211.06);
+  --color-brand-border: oklch(54.17% 0.000 89.88);
+}
+
 @layer base {
   body {
     @apply text-brand-text bg-brand-background;
