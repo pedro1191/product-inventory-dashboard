@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import Toggle from '../../components/Toggle';
+import Toggle from '../../components/ui/Toggle';
 import type { OptionModel } from '../../models';
 
 describe('Toggle', () => {

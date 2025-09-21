@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import Button from '../../components/Button';
+import Button from '../../components/ui/Button';
 
 describe('Button', () => {
   const defaultProps = {

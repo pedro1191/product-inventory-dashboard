@@ -1,4 +1,4 @@
-import type { OptionModel } from "../models";
+import type { OptionModel } from "../../models";
 
 interface ToggleProps<T extends string = string> {
   value: T;

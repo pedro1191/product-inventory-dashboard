@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Nullable, Product, ProductForm } from "../models";
-import NumberInput from "./NumberInput";
-import SelectInput from "./SelectInput";
-import TextInput from "./TextInput";
-import { categoryOptions, emptyProductForm } from "../constants";
+import type { Nullable, Product, ProductForm } from "../../models";
+import NumberInput from "../ui/NumberInput";
+import SelectInput from "../ui/SelectInput";
+import TextInput from "../ui/TextInput";
+import { categoryOptions, emptyProductForm } from "../../constants";
 import ProductImage from "./ProductImage";
-import { useProductSelectionDispatchContext } from "../contexts";
-import Button from "./Button";
+import { useProductSelectionDispatchContext } from "../../contexts";
+import Button from "../ui/Button";
 
 interface ProductFormProps {
   isLoading?: boolean;

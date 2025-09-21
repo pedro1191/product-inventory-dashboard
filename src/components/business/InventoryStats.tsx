@@ -1,7 +1,7 @@
-import type { Product } from "../models";
-import { formatPrice } from "../utils";
-import { useInventoryStats } from "../hooks";
-import { InventoryStatsLoader } from "./loaders/InventoryStatsLoader";
+import type { Product } from "../../models";
+import { formatPrice } from "../../utils";
+import { useInventoryStats } from "../../hooks";
+import { InventoryStatsLoader } from "../loaders/InventoryStatsLoader";
 
 interface InventoryStatsProps {
   isLoading?: boolean;

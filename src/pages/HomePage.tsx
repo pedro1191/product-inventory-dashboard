@@ -1,10 +1,10 @@
-import ProductTableFilters from '../components/ProductTableFilters'
-import ProductTable from '../components/ProductTable'
-import InventoryStats from '../components/InventoryStats';
-import ThemeToggle from '../components/ThemeToggle';
+import ProductTableFilters from '../components/business/ProductTableFilters'
+import ProductTable from '../components/business/ProductTable'
+import InventoryStats from '../components/business/InventoryStats';
+import ThemeToggle from '../components/business/ThemeToggle';
 import { useProductSelectionContext } from '../contexts';
-import ProductFormModal from '../components/ProductFormModal';
-import ProductDeleteConfirmationModal from '../components/ProductDeleteConfirmationModal';
+import ProductFormModal from '../components/business/ProductFormModal';
+import ProductDeleteConfirmationModal from '../components/business/ProductDeleteConfirmationModal';
 import { useProductFilters, useHomePageProducts } from '../hooks';
 import { useMemo } from 'react';
 

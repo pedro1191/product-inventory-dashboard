@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
-import type { ProductFilters } from '../models';
-import NumberInput from './NumberInput';
-import SearchInput from './SearchInput';
-import SelectInput from './SelectInput';
-import { categoryOptions, stockStatusOptions } from '../constants';
+import type { ProductFilters } from '../../models';
+import NumberInput from '../ui/NumberInput';
+import SearchInput from '../ui/SearchInput';
+import SelectInput from '../ui/SelectInput';
+import { categoryOptions, stockStatusOptions } from '../../constants';
 
 interface ProductTableFiltersProps {
   filters: ProductFilters;

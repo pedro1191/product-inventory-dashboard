@@ -1,8 +1,8 @@
 import { useCallback } from "react";
-import { useProductSelectionDispatchContext } from "../contexts";
-import type { Product } from "../models";
-import { getStockStatus, formatPrice } from "../utils";
-import Button from "./Button";
+import { useProductSelectionDispatchContext } from "../../contexts";
+import type { Product } from "../../models";
+import { getStockStatus, formatPrice } from "../../utils";
+import Button from "../ui/Button";
 import ProductImage from "./ProductImage";
 
 interface ProductTableRowProps {

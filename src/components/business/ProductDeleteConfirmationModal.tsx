@@ -1,8 +1,8 @@
 import { useCallback } from "react";
-import { useProductSelectionDispatchContext } from "../contexts";
-import type { Nullable, Product } from "../models";
-import Button from "./Button";
-import Modal from "./Modal";
+import { useProductSelectionDispatchContext } from "../../contexts";
+import type { Nullable, Product } from "../../models";
+import Button from "../ui/Button";
+import Modal from "../ui/Modal";
 
 interface ProductDeleteConfirmationModalProps {
   isLoading?: boolean;

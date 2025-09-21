@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { useProductSelectionDispatchContext } from "../contexts";
-import type { Nullable, Product } from "../models";
-import Modal from "./Modal";
+import { useProductSelectionDispatchContext } from "../../contexts";
+import type { Nullable, Product } from "../../models";
+import Modal from "../ui/Modal";
 import ProductForm from "./ProductForm";
 
 interface ProductFormModalProps {

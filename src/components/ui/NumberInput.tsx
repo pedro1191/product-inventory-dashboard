@@ -1,4 +1,4 @@
-import type { Nullable } from "../models";
+import type { Nullable } from "../../models";
 
 interface NumberInputProps<T extends string = string> {
   id: T;

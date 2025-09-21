@@ -1,4 +1,4 @@
-import Toast from './components/Toast';
+import Toast from './components/ui/Toast';
 import HomePage from './pages/HomePage';
 import { ProductSelectionProvider, ToastProvider } from './contexts';
 

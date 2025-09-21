@@ -1,4 +1,4 @@
-import type { Nullable, OptionModel } from "../models";
+import type { Nullable, OptionModel } from "../../models";
 
 interface SelectInputProps<TValue extends string = string, TId extends string = string> {
   id: TId;
