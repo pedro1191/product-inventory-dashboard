@@ -27,15 +27,15 @@ export function useHomePageProducts() {
     }
   }, [loadProducts, setProducts, handleError]);
 
-  const handleSuccess = useCallback((message: string) => {
+  const handleSuccess = useCallback(async (message: string): Promise<void> => {
     dispatch({ type: 'cleared_selection' });
     toastDispatch({ type: 'showed_toast', message });
     dispatch({ type: 'closed_product_modal' });
-    fetchProducts();
+    await fetchProducts();
   }, [dispatch, toastDispatch, fetchProducts]);
 
   useEffect(() => {
-    fetchProducts();
+    void fetchProducts();
   }, [fetchProducts]);
 
   const saveProduct = useCallback(async (product: Product): Promise<void> => {
@@ -45,7 +45,7 @@ export function useHomePageProducts() {
       } else {
         await addProduct(product);
       }
-      handleSuccess("Product saved successfully");
+      await handleSuccess("Product saved successfully");
     } catch (e) {
       handleError(e, 'An unexpected error occurred while saving the product.');
     }
@@ -54,7 +54,7 @@ export function useHomePageProducts() {
   const deleteProduct = useCallback(async (id: Product['id']) => {
     try {
       await deleteProductApi(id);
-      handleSuccess("Product deleted successfully");
+      void handleSuccess("Product deleted successfully");
     } catch (e) {
       handleError(e, 'An unexpected error occurred while deleting the product.');
     }

@@ -19,7 +19,9 @@ export default function NumberInput<T extends string = string>({ id, label, plac
         name={id}
         placeholder={placeholder}
         value={value ?? ''}
-        onChange={(e) => onChange(id, e.target.value ? Number(e.target.value) : null)}
+        onChange={(e) => {
+          onChange(id, e.target.value ? Number(e.target.value) : null);
+        }}
         required={required}
       />
     </div>

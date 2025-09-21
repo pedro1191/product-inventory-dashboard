@@ -31,7 +31,7 @@ export const setupMocks = () => {
     }
 
     console.log('Mock: Adding product');
-    const newProduct: Product = JSON.parse(config.data);
+    const newProduct: Product = JSON.parse(config.data as string) as Product;
     newProduct.id = generateId();
     products.push(newProduct);
     saveDataToStorage(products);
@@ -51,13 +51,16 @@ export const setupMocks = () => {
     }
 
     const id = config.url?.split('/').pop();
-    console.log(`Mock: Updating product ${id}`);
-    const updatedProduct: Product = JSON.parse(config.data);
+    console.log(`Mock: Updating product ${id ?? 'unknown'}`);
+    const updatedProduct: Product = JSON.parse(config.data as string) as Product;
     const index = products.findIndex(p => p.id === id);
     if (index === -1) {
       return [404, { error: 'Product not found' }];
     }
-    products[index] = { ...updatedProduct, id: id! };
+    if (!id) {
+      return [400, { error: 'Invalid product ID' }];
+    }
+    products[index] = { ...updatedProduct, id };
     saveDataToStorage(products);
 
     return [200, products[index]];
@@ -75,7 +78,7 @@ export const setupMocks = () => {
     }
 
     const id = config.url?.split('/').pop();
-    console.log(`Mock: Deleting product ${id}`);
+    console.log(`Mock: Deleting product ${id ?? 'unknown'}`);
     const index = products.findIndex(p => p.id === id);
     if (index === -1) {
       return [404, { error: 'Product not found' }];

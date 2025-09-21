@@ -20,7 +20,7 @@ export default function ProductDeleteConfirmationModal({ isOpen, product, isLoad
 
   const handleConfirm = useCallback(() => {
     if (!product) return;
-    onConfirm(product.id);
+    void onConfirm(product.id);
   }, [onConfirm, product]);
 
   return (

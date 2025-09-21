@@ -13,13 +13,18 @@ export function useApiError() {
   ): ApiError => {
     if (error instanceof AxiosError) {
       const status = error.response?.status;
-      const message = error.response?.data?.error || error.message || 'An unexpected error occurred';
+      let message = error.message || 'An unexpected error occurred';
+      if (error.response?.data && typeof error.response.data === 'object' && 'error' in error.response.data) {
+        const responseData = error.response.data as { error: string };
+        message = responseData.error;
+      }
       const code = error.code;
 
-      return { message, code, status, operation };
+      return { name: 'ApiError', message, code, status, operation };
     }
 
     return {
+      name: 'ApiError',
       message: error instanceof Error ? error.message : 'An unexpected error occurred',
       operation
     };

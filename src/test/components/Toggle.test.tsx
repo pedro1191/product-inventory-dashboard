@@ -5,7 +5,7 @@ import Toggle from '../../components/Toggle';
 import type { OptionModel } from '../../models';
 
 describe('Toggle', () => {
-  const mockOptions: OptionModel<string>[] = [
+  const mockOptions: OptionModel[] = [
     { key: 'option1', label: 'Option 1' },
     { key: 'option2', label: 'Option 2' },
     { key: 'option3', label: 'Option 3' },
@@ -74,7 +74,7 @@ describe('Toggle', () => {
 
     it('should handle single option', async () => {
       const user = userEvent.setup();
-      const singleOption: OptionModel<string>[] = [
+      const singleOption: OptionModel[] = [
         { key: 'only', label: 'Only Option' },
       ];
       const mockOnChange = vi.fn();

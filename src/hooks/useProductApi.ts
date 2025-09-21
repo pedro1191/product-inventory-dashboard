@@ -30,7 +30,7 @@ export function useProductApi() {
       const response = await apiClient.get('/products', {
         signal: controller.signal
       });
-      return response.data;
+      return response.data as Product[];
     } catch (e) {
       return handleApiError(e, 'loading', controller);
     } finally {
@@ -47,7 +47,7 @@ export function useProductApi() {
       const response = await apiClient.post('/products', product, {
         signal: controller.signal
       });
-      return response.data;
+      return response.data as Product;
     } catch (e) {
       return handleApiError(e, 'adding', controller);
     } finally {
@@ -64,7 +64,7 @@ export function useProductApi() {
       const response = await apiClient.put(`/products/${product.id}`, product, {
         signal: controller.signal
       });
-      return response.data;
+      return response.data as Product;
     } catch (e) {
       return handleApiError(e, 'updating', controller);
     } finally {

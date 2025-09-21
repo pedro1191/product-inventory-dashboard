@@ -32,7 +32,7 @@ const storageProductsKey = 'products';
 
 export const getDataFromStorage = (): Product[] => {
   const data = localStorage.getItem(storageProductsKey);
-  return data ? JSON.parse(data) : [];
+  return data ? JSON.parse(data) as Product[] : [];
 };
 
 export const saveDataToStorage = (data: Product[]) => {

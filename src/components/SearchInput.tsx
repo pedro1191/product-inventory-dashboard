@@ -13,7 +13,9 @@ export default function SearchInput<T extends string = string>({ id, placeholder
         type="search"
         placeholder={placeholder}
         value={value}
-        onChange={e => onChange(id, e.target.value)}
+        onChange={(e) => {
+          onChange(id, e.target.value);
+        }}
       />
     </div>
   );

@@ -11,7 +11,7 @@ import Button from "./Button";
 interface ProductFormProps {
   isLoading?: boolean;
   product: Nullable<Product>
-  onSave: (product: Product) => void;
+  onSave: (product: Product) => Promise<void>;
 }
 
 export default function ProductForm({ isLoading, product, onSave }: ProductFormProps) {
@@ -33,9 +33,9 @@ export default function ProductForm({ isLoading, product, onSave }: ProductFormP
     dispatch({ type: 'closed_product_modal' });
   }, [dispatch])
 
-  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSave = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    onSave(productForm as Product);
+    void onSave(productForm as Product);
   }
 
   return (

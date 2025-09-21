@@ -16,7 +16,9 @@ export default function Toggle<T extends string = string>({ value, options, onCh
               className="w-6 h-6"
               type="radio"
               checked={value === option.key}
-              onChange={() => onChange(option.key)}
+              onChange={() => {
+                onChange(option.key);
+              }}
             />
             {option.label}
           </label>

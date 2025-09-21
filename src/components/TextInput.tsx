@@ -17,7 +17,9 @@ export default function TextInput<T extends string = string>({ id, label, placeh
         name={id}
         placeholder={placeholder}
         value={value}
-        onChange={e => onChange(id, e.target.value)}
+        onChange={(e) => {
+          onChange(id, e.target.value);
+        }}
         required={required}
       />
     </div>

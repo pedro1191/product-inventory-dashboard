@@ -5,7 +5,7 @@ export interface LoadingStates {
   deleting: boolean;
 }
 
-export interface ApiError {
+export interface ApiError extends Error {
   message: string;
   code?: string;
   status?: number;
