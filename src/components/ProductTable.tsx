@@ -35,12 +35,9 @@ export default function ProductTable({ isLoading, products }: ProductTableProps)
                 </thead>
                 <tbody>
                   {
-                    products.length === 0 && (
+                    products.length === 0 ? (
                       <tr><td className="text-center text-lg p-10" colSpan={6}>No products found =/</td></tr>
-                    )
-                  }
-                  {
-                    products.map((product) => (
+                    ) : products.map((product) => (
                       <ProductTableRow key={product.id} product={product} />
                     ))
                   }
@@ -48,7 +45,9 @@ export default function ProductTable({ isLoading, products }: ProductTableProps)
               </table>
             </div>
           )
-            : (
+            : products.length === 0 ? (
+              <div className="text-center text-lg p-10">No products found =/</div>
+            ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
                 {
                   products.map((product) => (
