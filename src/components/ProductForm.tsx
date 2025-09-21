@@ -89,6 +89,7 @@ export default function ProductForm({ isLoading, product, onSave }: ProductFormP
           label="Stock"
           value={productForm.stock}
           onChange={handleFieldChange}
+          required
         />
       </div>
       <div className="action-buttons">
