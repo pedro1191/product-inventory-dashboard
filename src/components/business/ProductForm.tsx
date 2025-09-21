@@ -39,7 +39,7 @@ export default function ProductForm({ isLoading, product, onSave }: ProductFormP
   }
 
   return (
-    <form className="flex flex-col gap-10 w-full max-w-lg min-w-xs" onSubmit={handleSave}>
+    <form className="flex flex-col gap-10 w-full max-w-lg sm:min-w-xs" onSubmit={handleSave}>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
         <TextInput
           id="name"

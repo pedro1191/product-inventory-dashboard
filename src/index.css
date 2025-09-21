@@ -30,7 +30,7 @@
   }
 
   h1 {
-    @apply text-4xl font-bold text-brand-primary sm:text-6xl;
+    @apply text-4xl font-bold text-brand-primary;
   }
 
   h2 {
