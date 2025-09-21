@@ -1,27 +1,14 @@
-import { useCallback } from "react";
-import { TOAST_DURATION_IN_MS } from "../constants";
-import { useTimeout } from "../hooks";
-import { useToastContext, useToastDispatchContext } from "../contexts";
 import Button from "./Button";
+import { useToast } from "../hooks";
 
 export default function Toast() {
-  const { message } = useToastContext();
-  const dispatch = useToastDispatchContext();
-
-  const { clear } = useTimeout(() => {
-    dispatch({ type: 'hid_toast' });
-  }, TOAST_DURATION_IN_MS);
-
-  const handleClose = useCallback(() => {
-    clear();
-    dispatch({ type: 'hid_toast' });
-  }, [clear, dispatch]);
+  const { isVisible, message, handleClose } = useToast();
 
   return (
-    <div className="fixed w-full flex justify-center bottom-10 z-10">
-      <div className="flex flex-row gap-3 rounded-xl border p-3">
-        <span>{message}</span>
-        <Button label="Close" onClick={handleClose} />
+    <div className={`fixed left-1/2 -translate-x-1/2 bottom-10 z-10 animate-slide-up ${isVisible ? 'show' : 'hidden'}`}>
+      <div className="flex flex-row items-center gap-6 card p-3">
+        <span className="text-md">{message}</span>
+        <Button className="primary-button" label="Close" onClick={handleClose} />
       </div>
     </div>
   );

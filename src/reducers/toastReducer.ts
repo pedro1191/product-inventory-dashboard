@@ -27,7 +27,7 @@ export function toastReducer(
 
     case 'hid_toast':
       return {
-        message: null,
+        ...state,
         isVisible: false,
       };
 

@@ -67,3 +67,25 @@
 @utility action-buttons {
   @apply flex flex-row items-center gap-3;
 }
+
+@utility animate-fade-in {
+  @apply opacity-0 scale-95 hidden transition-discrete transition open:opacity-100 open:scale-100 open:block;
+
+  @starting-style {
+    @apply open:opacity-0 open:scale-95;
+  }
+}
+
+@utility animate-slide-up {
+  @apply opacity-0 translate-y-4 hidden transition-discrete transition;
+
+  &.show {
+    @apply opacity-100 translate-y-0 block;
+  }
+
+  @starting-style {
+    &.show {
+      @apply opacity-0 translate-y-4;
+    }
+  }
+}

@@ -19,7 +19,7 @@ export default function Modal({ isOpen, children, onClose }: ModalProps) {
 
   return (
     // @ts-expect-error - closedby is a valid HTML attribute but not yet in React type definitions
-    <dialog ref={modalRef} className="m-auto card" closedby="any" onClose={onClose}>
+    <dialog ref={modalRef} className="m-auto card animate-fade-in" closedby="any" onClose={onClose}>
       <div className="flex flex-col items-center justify-center h-full">
         {children}
       </div>
