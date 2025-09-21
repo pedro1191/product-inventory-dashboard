@@ -1,69 +1,92 @@
-# React + TypeScript + Vite
+# Product Inventory Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application for managing product inventory with filtering, and CRUD operations.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 📊 **Inventory Statistics** - Stats including total products, stock counts, and average pricing
+- 🔍 **Advanced Filtering** - Filter products by category, stock status, price range, and search terms
+- ➕ **Product Management** - Add, edit, and delete products with a user-friendly form interface
+- 📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
+- 🌙 **Dark Mode Support** - Toggle between light and dark themes
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+To run this project locally, simply execute:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install && npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+That's it! The application will start and be available at `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tech Stack
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **React 19** - Latest React with modern features
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **Vitest** - Fast unit testing framework
+- **React Testing Library** - Component testing utilities
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run test` - Run tests in watch mode
+- `npm run lint` - Run ESLint automatically
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── ui/          # Reusable UI components (Button, Modal, etc.)
+│   ├── business/    # Business-specific components (ProductTable, etc.)
+│   └── loaders/     # Loading state components
+├── hooks/           # Custom React hooks
+├── contexts/        # React contexts for state management
+├── utils/           # Utility functions
+├── models/          # TypeScript type definitions
+├── api/             # API client and mock data
+└── test/            # Test files
+```
+
+## Features Overview
+
+### Product Management
+- Add new products with name, category, price, stock, and image
+- Edit existing products with inline forms
+- Delete products with confirmation dialogs
+- Real-time form validation
+
+### Filtering & Search
+- Text search across product names
+- Filter by product category
+- Filter by stock status (All, In Stock, Low Stock, Out of Stock)
+- Price range filtering with min/max inputs
+- Combine multiple filters for precise results
+
+### Inventory Statistics
+- Total product count
+- In-stock vs out-of-stock counts
+- Low stock alerts
+- Average product price calculations
+
+### User Experience
+- Responsive design that works on all devices
+- Dark/light theme toggle
+- Loading states and skeleton loaders
+- Toast notifications for user feedback
+
+## Testing
+
+The project includes comprehensive tests for:
+- Custom hooks (useInventoryStats, useProductFilters)
+- UI components (Button, Toggle)
+
+Run tests with:
+```bash
+npm test
 ```
