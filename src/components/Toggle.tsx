@@ -11,7 +11,7 @@ export default function Toggle<T extends string = string>({ value, options, onCh
     <div className="flex flex-row flex-wrap gap-4 items-center">
       {
         options.map(option => (
-          <label key={option.key} className="flex flex-row gap-2 text-lg font-normal">
+          <label key={option.key} className="flex flex-row items-center gap-2 font-normal">
             <input
               className="w-6 h-6"
               type="radio"

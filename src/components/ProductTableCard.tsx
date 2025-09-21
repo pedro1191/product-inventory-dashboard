@@ -23,13 +23,13 @@ export default function ProductTableCard({ product }: ProductTableCardProps) {
 
   return (
     <div className="flex flex-col gap-4 card hover:border-brand-accent">
-      <div className="text-lg font-bold">{product.name}</div>
+      <div className="text-base sm:text-lg font-bold">{product.name}</div>
       <ProductImage src={product.imageUrl} alt={product.name} />
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-3">
-          <p className="text-base font-bold">Price: <span className="font-normal">{formatPrice(product.price)}</span></p>
-          <p className="text-base font-bold">Category: <span className="font-normal">{product.category}</span></p>
-          <p className="text-base font-bold">Stock Status: <span className="font-normal">{stockStatus}</span></p>
+          <p className="text-sm sm:text-base font-bold">Price: <span className="font-normal">{formatPrice(product.price)}</span></p>
+          <p className="text-sm sm:text-base font-bold">Category: <span className="font-normal">{product.category}</span></p>
+          <p className="text-sm sm:text-base font-bold">Stock Status: <span className="font-normal">{stockStatus}</span></p>
         </div>
         <div className="action-buttons">
           <Button className="primary-button" label="Edit" onClick={handleEdit} />

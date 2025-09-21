@@ -27,7 +27,7 @@ export default function ProductTable({ isLoading, products }: ProductTableProps)
                   <tr>
                     {
                       columnNames.map((column) => (
-                        <th key={column} className="text-left whitespace-nowrap px-1 text-lg w-75">{column}</th>
+                        <th key={column} className="text-left whitespace-nowrap px-1 text-base sm:text-lg w-75">{column}</th>
                       ))
                     }
                     <th className="px-1 w-75"></th>

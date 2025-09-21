@@ -23,14 +23,14 @@ export default function ProductTableRow({ product }: ProductTableRowProps) {
 
   return (
     <tr>
-      <td className="text-lg py-2 px-1">{product.name}</td>
-      <td className="text-lg py-2 px-1">
+      <td className="text-md sm:text-lg py-2 px-1">{product.name}</td>
+      <td className="text-md sm:text-lg py-2 px-1">
         <ProductImage src={product.imageUrl} alt={product.name} />
       </td>
-      <td className="text-lg py-2 px-1">{formatPrice(product.price)}</td>
-      <td className="text-lg py-2 px-1">{product.category}</td>
-      <td className="text-lg py-2 px-1">{stockStatus}</td>
-      <td className="text-lg py-2 px-1">
+      <td className="text-md sm:text-lg py-2 px-1">{formatPrice(product.price)}</td>
+      <td className="text-md sm:text-lg py-2 px-1">{product.category}</td>
+      <td className="text-md sm:text-lg py-2 px-1">{stockStatus}</td>
+      <td className="text-md sm:text-lg py-2 px-1">
         <div className="action-buttons">
           <Button className="primary-button" label="Edit" onClick={handleEdit} />
           <Button className="primary-button-outline" label="Delete" onClick={handleDelete} />

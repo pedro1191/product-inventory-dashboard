@@ -18,7 +18,7 @@ export default function HomePage() {
     <div className="flex flex-col mx-auto p-10 bg-brand-surface">
       <div className="flex flex-col gap-5">
         <h1>Product Inventory Dashboard</h1>
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           <div className="order-last md:order-first md:col-span-2">
             <ProductTableFilters filters={filters} onFiltersChange={setFilters} />
           </div>

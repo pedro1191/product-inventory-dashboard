@@ -21,11 +21,11 @@
   }
 
   h1 {
-    @apply text-6xl font-bold text-brand-primary;
+    @apply text-4xl font-bold text-brand-primary sm:text-6xl;
   }
 
   h2 {
-    @apply text-2xl font-semibold text-brand-primary;
+    @apply text-xl sm:text-2xl font-semibold text-brand-primary;
   }
 
   button {
@@ -33,12 +33,12 @@
   }
 
   label {
-    @apply text-lg font-bold;
+    @apply text-base sm:text-lg font-bold;
   }
 
   input,
   select {
-    @apply px-4 py-3.5 border-b-1 border-brand-border bg-brand-card-background h-full accent-brand-accent;
+    @apply px-4 py-3.5 border-b-1 border-brand-border bg-brand-card-background h-full accent-brand-accent text-sm sm:text-base;
   }
 
   button,
@@ -61,7 +61,7 @@
 }
 
 @utility button-lg {
-  @apply text-lg px-5 py-2;
+  @apply text-base sm:text-lg px-5 py-2;
 }
 
 @utility action-buttons {
