@@ -1,0 +1,39 @@
+name: Deployment Workflow
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy application
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build and deploy
+      uses: appleboy/ssh-action@master
+      env:
+        CONTAINER: product-inventory-dashboard-front
+        IMAGE: product-inventory-dashboard-front
+        PROJECTDIR: product-inventory-dashboard
+        PORT: 8002
+        REPO: git@github.com:pedro1191/product-inventory-dashboard.git
+        TAG: latest
+        WORKDIR: portfolio/react_projects
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        envs: CONTAINER, IMAGE, PROJECTDIR, PORT, REPO, TAG, WORKDIR
+        script: |
+          set -e
+          rm -rf $WORKDIR/$PROJECTDIR
+          mkdir -p $WORKDIR
+          cd $WORKDIR
+          git clone $REPO
+          cd $PROJECTDIR
+          docker stop $CONTAINER || true
+          docker rm $CONTAINER || true
+          docker rmi $IMAGE:$TAG || true
+          docker build --pull --no-cache -t $IMAGE:$TAG .
+          docker run -d --restart always --name $CONTAINER -p $PORT:80 $IMAGE:$TAG
+          docker system prune -f
