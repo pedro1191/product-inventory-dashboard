@@ -1,12 +1,12 @@
-import ProductTableFilters from '../components/business/ProductTableFilters'
-import ProductTable from '../components/business/ProductTable'
-import InventoryStats from '../components/business/InventoryStats';
-import ThemeToggle from '../components/business/ThemeToggle';
-import { useProductSelectionContext } from '../contexts';
-import ProductFormModal from '../components/business/ProductFormModal';
-import ProductDeleteConfirmationModal from '../components/business/ProductDeleteConfirmationModal';
-import { useProductFilters, useHomePageProducts } from '../hooks';
 import { useMemo } from 'react';
+
+import InventoryStats from '../components/business/InventoryStats';
+import ProductDeleteConfirmationModal from '../components/business/ProductDeleteConfirmationModal';
+import ProductFormModal from '../components/business/ProductFormModal';
+import ProductTable from '../components/business/ProductTable';
+import ProductTableFilters from '../components/business/ProductTableFilters';
+import { useProductSelectionContext } from '../contexts';
+import { useProductFilters, useHomePageProducts } from '../hooks';
 
 export default function HomePage() {
   const { products, loadingStates, saveProduct, deleteProduct } = useHomePageProducts();
@@ -16,13 +16,10 @@ export default function HomePage() {
   const selectedProduct = useMemo(() => products.find(p => p.id === selectedProductId) ?? null, [products, selectedProductId]);
 
   return (
-    <div className="flex flex-col mx-auto p-10 bg-brand-surface">
+    <div className="flex flex-col mx-auto px-5 py-10 bg-brand-surface">
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-10">
-          <div className="flex justify-between items-center">
-            <h1>Product Inventory Dashboard</h1>
-            <ThemeToggle />
-          </div>
+          <h1>Product Inventory Dashboard</h1>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
             <div className="order-last md:order-first md:col-span-2">
               <ProductTableFilters filters={filters} onFiltersChange={setFilters} />
@@ -37,5 +34,5 @@ export default function HomePage() {
         <ProductDeleteConfirmationModal isOpen={isConfirmationModalOpen} isLoading={loadingStates.deleting} product={selectedProduct} onConfirm={deleteProduct} />
       </div>
     </div>
-  )
+  );
 }
