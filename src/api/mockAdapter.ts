@@ -1,7 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
+
+import type { Product } from '../models';
+
 import apiClient from './client';
 import { generateId, getDataFromStorage, getRandomError, saveDataToStorage, shouldFail } from './mockUtils';
-import type { Product } from '../models';
 
 const mock = new MockAdapter(apiClient, { delayResponse: 1000 });
 

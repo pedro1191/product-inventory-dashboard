@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+
 import type { ToastAction, ToastState } from '../reducers/toastReducer';
 
 export const ToastContext = createContext<ToastState | undefined>(undefined);

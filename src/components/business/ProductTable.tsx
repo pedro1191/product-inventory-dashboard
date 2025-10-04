@@ -1,10 +1,12 @@
 import { useState } from "react";
-import type { Product, TableViewMode } from "../../models";
-import ProductTableRow from "./ProductTableRow";
-import ProductTableHeader from "./ProductTableHeader";
-import ProductTableCard from "./ProductTableCard";
-import { ProductTableLoader } from "../loaders/ProductTableLoader";
+
 import { columnNames } from "../../constants";
+import type { Product, TableViewMode } from "../../models";
+import { ProductTableLoader } from "../loaders/ProductTableLoader";
+
+import ProductTableCard from "./ProductTableCard";
+import ProductTableHeader from "./ProductTableHeader";
+import ProductTableRow from "./ProductTableRow";
 
 interface ProductTableProps {
   isLoading?: boolean;

@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import type { Product } from '../models';
 import { matchesStockStatus } from '../utils';
 

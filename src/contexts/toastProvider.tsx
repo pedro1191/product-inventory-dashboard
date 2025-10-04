@@ -1,9 +1,11 @@
 import React, { useReducer } from 'react';
-import { ToastContext, ToastDispatchContext } from './toastContext';
+
 import {
   toastReducer,
   initialToastState
 } from '../reducers/toastReducer';
+
+import { ToastContext, ToastDispatchContext } from './toastContext';
 
 interface ToastProviderProps {
   children: React.ReactNode;

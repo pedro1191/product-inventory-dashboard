@@ -1,9 +1,10 @@
 import { useCallback } from "react";
-import Toggle from "../ui/Toggle";
-import Button from "../ui/Button";
+
 import { tableViewOptions } from "../../constants";
-import type { TableViewMode } from "../../models";
 import { useProductSelectionDispatchContext } from "../../contexts";
+import type { TableViewMode } from "../../models";
+import Button from "../ui/Button";
+import Toggle from "../ui/Toggle";
 
 interface ProductTableHeaderProps {
   viewMode: TableViewMode;

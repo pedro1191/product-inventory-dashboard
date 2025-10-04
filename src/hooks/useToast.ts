@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
-import { useToastContext, useToastDispatchContext } from "../contexts";
+
 import { TOAST_DURATION_IN_MS } from "../constants";
+import { useToastContext, useToastDispatchContext } from "../contexts";
 
 export function useToast() {
   const { isVisible, message } = useToastContext();
@@ -27,5 +28,5 @@ export function useToast() {
     isVisible,
     message,
     handleClose,
-  }
+  };
 }

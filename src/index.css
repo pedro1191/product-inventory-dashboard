@@ -21,6 +21,11 @@
 }
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+    @apply overflow-auto;
+  }
+
   body {
     @apply text-brand-text bg-brand-background;
   }

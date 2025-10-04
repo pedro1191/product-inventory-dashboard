@@ -1,5 +1,6 @@
-import Button from "./Button";
 import { useToast } from "../../hooks";
+
+import Button from "./Button";
 
 export default function Toast() {
   const { isVisible, message, handleClose } = useToast();

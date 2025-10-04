@@ -1,4 +1,5 @@
 import type { TableViewMode } from "../../models";
+
 import { ProductTableCardLoader } from "./ProductTableCardLoader";
 import { ProductTableRowLoader } from "./ProductTableRowLoader";
 import { SkeletonLoader } from "./SkeletonLoader";
