@@ -1,7 +1,7 @@
-import { defineConfig, mergeConfig } from 'vite'
-import { defineConfig as defineVitestConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+import { defineConfig, mergeConfig } from 'vite';
+import { defineConfig as defineVitestConfig } from 'vitest/config';
 
 // https://vite.dev/config/
 export default mergeConfig(
@@ -18,4 +18,4 @@ export default mergeConfig(
       setupFiles: ['./src/test/setup.ts'],
     },
   })
-)
+);

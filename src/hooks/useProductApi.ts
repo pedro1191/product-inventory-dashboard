@@ -1,6 +1,8 @@
 import { useState, useCallback, useRef } from "react";
-import type { LoadingStates, Product } from "../models";
+
 import apiClient from "../api/client";
+import type { LoadingStates, Product } from "../models";
+
 import { useAbortController } from "./useAbortController";
 import { useApiError } from "./useApiError";
 

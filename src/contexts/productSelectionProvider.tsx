@@ -1,9 +1,11 @@
 import React, { useReducer } from 'react';
-import { ProductSelectionContext, ProductSelectionDispatchContext } from './productSelectionContext';
+
 import {
   productSelectionReducer,
   initialProductSelectionState
 } from '../reducers';
+
+import { ProductSelectionContext, ProductSelectionDispatchContext } from './productSelectionContext';
 
 interface ProductSelectionProviderProps {
   children: React.ReactNode;

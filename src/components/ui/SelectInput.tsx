@@ -13,7 +13,7 @@ export default function SelectInput<TValue extends string = string, TId extends 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
     onChange(id, selectedValue ? (selectedValue as TValue) : null);
-  }
+  };
 
   return (
     <div className="flex flex-col gap-1">

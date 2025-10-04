@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+
 import type { ProductSelectionAction, ProductSelectionState } from '../reducers';
 
 export const ProductSelectionContext = createContext<ProductSelectionState | undefined>(undefined);

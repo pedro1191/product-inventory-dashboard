@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
+
+import { categoryOptions, emptyProductForm } from "../../constants";
+import { useProductSelectionDispatchContext } from "../../contexts";
 import type { Nullable, Product, ProductForm } from "../../models";
+import Button from "../ui/Button";
 import NumberInput from "../ui/NumberInput";
 import SelectInput from "../ui/SelectInput";
 import TextInput from "../ui/TextInput";
-import { categoryOptions, emptyProductForm } from "../../constants";
+
 import ProductImage from "./ProductImage";
-import { useProductSelectionDispatchContext } from "../../contexts";
-import Button from "../ui/Button";
 
 interface ProductFormProps {
   isLoading?: boolean;
@@ -31,12 +33,12 @@ export default function ProductForm({ isLoading, product, onSave }: ProductFormP
 
   const handleCancel = useCallback(() => {
     dispatch({ type: 'closed_product_modal' });
-  }, [dispatch])
+  }, [dispatch]);
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     void onSave(productForm as Product);
-  }
+  };
 
   return (
     <form className="flex flex-col gap-10 w-full max-w-lg sm:min-w-xs" onSubmit={handleSave}>

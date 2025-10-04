@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Product } from "../models";
-import { useProductApi } from "./useProductApi";
-import { isAbortError } from "../utils";
+
 import { useProductSelectionDispatchContext, useToastDispatchContext } from "../contexts";
+import type { Product } from "../models";
+import { isAbortError } from "../utils";
+
+import { useProductApi } from "./useProductApi";
 
 export function useHomePageProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -65,5 +67,5 @@ export function useHomePageProducts() {
     loadingStates,
     saveProduct,
     deleteProduct,
-  }
+  };
 }

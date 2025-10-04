@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
-import type { Product, ProductFilters } from '../models';
+
 import { emptyFilters } from '../constants';
+import type { Product, ProductFilters } from '../models';
 import { matchesStockStatus } from '../utils';
 
 export function useProductFilters(products: Product[]) {
